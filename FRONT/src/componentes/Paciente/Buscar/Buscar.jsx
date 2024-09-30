@@ -3,29 +3,36 @@ import "./Buscar.css";
 import HeaderPaciente from "../HeaderPaciente/HeaderPaciente";
 
 function Buscar() {
-  const [doctores, setDoctores] = useState([]);
-  const [busqueda, setBusqueda] = useState("");
-  const [doctoresFiltrados, setDoctoresFiltrados] = useState([]);
+  const [doctores, setDoctores] = useState([]);  
+  const [busqueda, setBusqueda] = useState("");  
+  const [doctoresFiltrados, setDoctoresFiltrados] = useState([]); 
+
 
   useEffect(() => {
     fetch("/doctores.json") 
       .then((response) => response.json())
-      .then((data) => setDoctores(data))
+      .then((data) => {
+        setDoctores(data);         
+        setDoctoresFiltrados(data); 
+      })
       .catch((error) => console.error("Error al cargar los doctores:", error));
   }, []);
 
   const handleBusquedaChange = (event) => {
-    setBusqueda(event.target.value);
+    setBusqueda(event.target.value); 
   };
 
   const handleBuscarClick = () => {
-    const filtrados = doctores.filter((doctor) =>
-      doctor.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-      doctor.especialidad.toLowerCase().includes(busqueda.toLowerCase())
-    );
-    setDoctoresFiltrados(filtrados);
+    if (busqueda === "") {
+      setDoctoresFiltrados(doctores); 
+    } else {
+      const filtrados = doctores.filter((doctor) =>
+        doctor.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+        doctor.especialidad.toLowerCase().includes(busqueda.toLowerCase())
+      );
+      setDoctoresFiltrados(filtrados); 
+    }
 
-    // Forzar el scroll hacia arriba de la lista
     const doctorList = document.querySelector(".doctor-list");
     if (doctorList) {
       doctorList.scrollIntoView({ behavior: "smooth" });
@@ -72,6 +79,3 @@ function Buscar() {
 }
 
 export default Buscar;
-
-
-    

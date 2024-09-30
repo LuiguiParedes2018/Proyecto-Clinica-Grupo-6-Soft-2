@@ -1,0 +1,27 @@
+[
+    {
+      "id": 1,
+      "nombre": "Ana Gómez",
+      "correo": "ana.gomez@ejemplo.com",
+      "telefono": "+123456789",
+      "contrasena": "anaPassword123",
+      "descripcion": "Paciente registrada en el sistema."
+    },
+    {
+      "id": 2,
+      "nombre": "Pedro Hernández",
+      "correo": "pedro.hernandez@ejemplo.com",
+      "telefono": "+987654321",
+      "contrasena": "pedroPassword456",
+      "descripcion": "Paciente con historial de citas previas."
+    },
+    {
+      "id": 3,
+      "nombre": "Lucía Torres",
+      "correo": "lucia.torres@ejemplo.com",
+      "telefono": "+123123123",
+      "contrasena": "luciaPassword789",
+      "descripcion": "Paciente nueva en el sistema."
+    }
+  ]
+  
