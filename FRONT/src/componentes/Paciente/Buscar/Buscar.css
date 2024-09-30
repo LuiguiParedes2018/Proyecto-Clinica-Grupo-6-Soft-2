@@ -1,0 +1,82 @@
+.buscar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Alineación central horizontal */
+    position: fixed; /* Hace que el contenedor permanezca fijo */
+    top: 110px; /* Ajusta este valor según la altura del header */
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    z-index: 1000;
+    
+}
+
+.buscar-input {
+    width: 80%; 
+    height: 50px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.buscar-button {
+    margin-left: 20px;
+    width: 100px;
+    height: 50px;
+    background-color: rgb(0, 0, 0);
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgb(0, 0, 0, .4);
+    cursor: pointer;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    transition: background-color 0.5s ease;
+}
+
+.buscar-button:hover {
+    background-color: rgb(58, 202, 255); 
+}
+
+.doctor-list {
+    padding-top: 160px; /* Ajusta el valor para compensar el espacio ocupado por el header y el buscador */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    min-height: 500px;
+}
+
+.doctor-card {
+    width: 300px;
+    min-height: 400px;
+    margin: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.doctor-imagen {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.doctor-detalles {
+    margin-top: 10px;
+}
+
+.ver-perfil-button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: rgb(58, 202, 255);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+}
+
+.ver-perfil-button:hover {
+    background-color: rgb(0, 0, 0);
+}
+

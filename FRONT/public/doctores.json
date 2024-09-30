@@ -1,0 +1,31 @@
+[
+    {
+      "id": 1,
+      "nombre": "Dr. Juan Pérez",
+      "especialidad": "Cardiología",
+      "bio": "Experto en enfermedades cardíacas con más de 10 años de experiencia.",
+      "imagen": "https://via.placeholder.com/150/0000FF/808080?text=Doctor+1"
+    },
+    {
+      "id": 2,
+      "nombre": "Dra. María Gómez",
+      "especialidad": "Dermatología",
+      "bio": "Especialista en el cuidado de la piel con enfoque en tratamientos no invasivos.",
+      "imagen": "https://via.placeholder.com/150/FF0000/FFFFFF?text=Doctor+2"
+    },
+    {
+      "id": 3,
+      "nombre": "Dr. Luis Martínez",
+      "especialidad": "Neurología",
+      "bio": "Especialista en el tratamiento de enfermedades neurológicas y neurocirugía.",
+      "imagen": "https://via.placeholder.com/150/00FF00/000000?text=Doctor+3"
+    },
+    {
+      "id": 4,
+      "nombre": "Dra. Carla Torres",
+      "especialidad": "Pediatría",
+      "bio": "Con más de 15 años de experiencia en el cuidado y tratamiento de niños.",
+      "imagen": "https://via.placeholder.com/150/FFFF00/000000?text=Doctor+4"
+    }
+  ]
+  
