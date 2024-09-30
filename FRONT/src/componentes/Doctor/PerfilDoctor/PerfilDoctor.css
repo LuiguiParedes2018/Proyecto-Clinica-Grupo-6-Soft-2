@@ -1,0 +1,75 @@
+.perfil-doctor-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: white; /* Fondo blanco */
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 80%;  /* Más grande */
+    max-width: 600px; /* Tamaño máximo */
+    margin: auto; /* Centrar horizontalmente */
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #2C3E50;
+    text-align: center;
+}
+
+.perfil-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.perfil-imagen {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.perfil-detalles {
+    width: 100%;
+    max-width: 400px;
+}
+
+h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #34495E;
+}
+
+p {
+    font-size: 1.2em;
+    color: #34495E;
+}
+
+.edit-button {
+    background-color: #3498DB;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-top: 20px;
+}
+
+.edit-button:hover {
+    background-color: #2980B9;
+}
+
+@media (max-width: 768px) {
+    .perfil-doctor-container {
+        width: 95%;  /* Aumentar en pantallas pequeñas */
+    }
+}
+

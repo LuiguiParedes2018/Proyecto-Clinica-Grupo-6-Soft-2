@@ -51,7 +51,7 @@ function CrearHorario() {
         </div>
         <div className="input-box">
           <label htmlFor="consultorio">Consultorio:</label>
-          <select
+          <select className="select-doctor"
             id="consultorio"
             value={consultorio}
             onChange={handleConsultorioChange}
