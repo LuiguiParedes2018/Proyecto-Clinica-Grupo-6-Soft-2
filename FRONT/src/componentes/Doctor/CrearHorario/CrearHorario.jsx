@@ -3,7 +3,6 @@ import "./CrearHorario.css";
 import HeaderDoctor from "../HeaderDoctor/HeaderDoctor.jsx";
 
 function CrearHorario() {
-
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const [consultorio, setConsultorio] = useState("");
@@ -23,6 +22,9 @@ function CrearHorario() {
   const confirmarHorario = () => {
     alert(`Horario confirmado:\nFecha: ${fecha}\nHora: ${hora}\nConsultorio: ${consultorio}`);
   };
+
+  // Verifica si todos los campos están completos
+  const isFormValid = fecha && hora && consultorio;
 
   return (
     <div>
@@ -50,7 +52,8 @@ function CrearHorario() {
         </div>
         <div className="input-box">
           <label htmlFor="consultorio">Consultorio</label>
-          <select className="select-doctor"
+          <select
+            className="select-doctor"
             id="consultorio"
             value={consultorio}
             onChange={handleConsultorioChange}
@@ -62,7 +65,11 @@ function CrearHorario() {
             <option value="Consultorio 3">Consultorio 3</option>
           </select>
         </div>
-        <button className="confirm-button" onClick={confirmarHorario}>
+        <button
+          className="confirm-button"
+          onClick={confirmarHorario}
+          disabled={!isFormValid} // Deshabilita el botón si el formulario no es válido
+        >
           Confirmar
         </button>
       </div>
@@ -71,3 +78,4 @@ function CrearHorario() {
 }
 
 export default CrearHorario;
+
