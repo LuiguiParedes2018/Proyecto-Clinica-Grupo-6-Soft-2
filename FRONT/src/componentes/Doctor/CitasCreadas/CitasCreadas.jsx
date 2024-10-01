@@ -9,10 +9,9 @@ function CitasCreadas() {
   return (
     <div>
       <HeaderDoctor />
-      <h1>Citas</h1>
       <div className="ver-citas-container">
         {citas.length === 0 ? (
-          <p className="mensaje-vacio">No tienes citas programadas.</p>
+          <p className="mensaje-vacio">Tus horarios apareceran aqui.</p>
         ) : (
           <ul className="lista-citas">
             {citas.map((cita, index) => (

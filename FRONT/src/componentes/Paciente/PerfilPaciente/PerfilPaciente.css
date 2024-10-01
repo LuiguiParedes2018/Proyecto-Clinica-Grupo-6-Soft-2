@@ -1,32 +1,56 @@
-.perfil-paciente {
+.perfil-paciente-container {
     padding: 20px;
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: #f5f5f5;
-    border-radius: 8px;
-}
-
-.perfil-paciente label {
-    display: block;
-    margin-top: 10px;
-}
-
-.perfil-paciente input, .perfil-paciente textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-}
-
-.perfil-paciente button {
-    padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    height: 320px;
+  }
+  
+  .perfil-header {
+    display: flex;
+    align-items: center;
+  }
+  
+  .perfil-imagen {
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  
+  .perfil-detalles {
+    max-width: 400px;
+  }
+  
+  .edit-button,
+  .save-button,
+  .cancel-button {
+    padding: 10px 15px;
+    background-color: #000000;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-
-.perfil-paciente button:hover {
-    background-color: #0056b3;
-}
+    margin-top: 10px;
+  }
+  
+  .edit-button:hover,
+  .save-button:hover,
+  .cancel-button:hover {
+    background-color: #8a16ae;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  

@@ -7,7 +7,6 @@ function Buscar() {
   const [busqueda, setBusqueda] = useState("");  
   const [doctoresFiltrados, setDoctoresFiltrados] = useState([]); 
 
-
   useEffect(() => {
     fetch("/doctores.json") 
       .then((response) => response.json())
@@ -42,40 +41,43 @@ function Buscar() {
   return (
     <div>
       <HeaderPaciente />
-      <div className="buscar-container">
-        <input
-          type="text"
-          placeholder="Busca por nombre o especialidad..."
-          value={busqueda}
-          onChange={handleBusquedaChange}
-          className="buscar-input"
-        />
-        <button onClick={handleBuscarClick} className="buscar-button">Buscar</button>
-      </div>
-      
-      <div className="doctor-list">
-        {doctoresFiltrados.length > 0 ? (
-          doctoresFiltrados.map((doctor) => (
-            <div key={doctor.id} className="doctor-card">
-              <img
-                src={doctor.imagen}
-                alt={`Foto de ${doctor.nombre}`}
-                className="doctor-imagen"
-              />
-              <div className="doctor-detalles">
-                <h2>{doctor.nombre}</h2>
-                <p><strong>Especialidad:</strong> {doctor.especialidad}</p>
-                <p>{doctor.bio}</p>
-                <button className="ver-perfil-button">Ver Perfil</button>
+      <div className="buscar-wrapper"> {/* Contenedor principal agregado */}
+        <div className="buscar-container">
+          <input
+            type="text"
+            placeholder="Busca por nombre o especialidad..."
+            value={busqueda}
+            onChange={handleBusquedaChange}
+            className="buscar-input"
+          />
+          <button onClick={handleBuscarClick} className="buscar-button">Buscar</button>
+        </div>
+
+        <div className="doctor-list">
+          {doctoresFiltrados.length > 0 ? (
+            doctoresFiltrados.map((doctor) => (
+              <div key={doctor.id} className="doctor-card">
+                <img
+                  src={doctor.imagen}
+                  alt={`Foto de ${doctor.nombre}`}
+                  className="doctor-imagen"
+                />
+                <div className="doctor-detalles">
+                  <h2>{doctor.nombre}</h2>
+                  <p><strong>Especialidad:</strong> {doctor.especialidad}</p>
+                  <p>{doctor.bio}</p>
+                  <button className="ver-perfil-button">Ver Perfil</button>
+                </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <p>No se encontraron doctores.</p>
-        )}
-      </div>
+            ))
+          ) : (
+            <p>No se encontraron doctores.</p>
+          )}
+        </div>
+      </div> {/* Cierre del contenedor principal */}
     </div>
   );
 }
 
 export default Buscar;
+
