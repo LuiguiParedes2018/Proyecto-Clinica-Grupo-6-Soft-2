@@ -5,7 +5,7 @@ import HeaderDoctor from "../HeaderDoctor/HeaderDoctor.jsx";
 function PerfilDoctor() {
   const doctorData = {
     nombre: "Dr. Juan Pérez",
-    especialidad: "Cardiología",
+    especialidad: "Cardiologia",
     bio: "Experto en enfermedades cardíacas, con más de 10 años de experiencia. Ha realizado más de 500 procedimientos exitosos.",
     imagen: "https://via.placeholder.com/150",
     educacion: "Universidad Nacional de Medicina, 2010",
