@@ -33,16 +33,6 @@ function RegisterDoctor() {
           </div>
           {/* De momento estos datos seran estaticos */}
           <div className="input-box">
-            <FaHospital className="icono" />
-            <select value={sede} onChange={handleSedeChange} required>
-              <option value="">Seleccione Sede</option>
-              <option value="San Luis">San Luis</option>
-              <option value="San Borja">San Borja</option>
-              <option value="Mirafloes">Mirafloes</option>
-              <option value="San isidro">San isidro</option>
-            </select>
-          </div>
-          <div className="input-box">
             <FaBriefcase className="icono" />
             <select value={especialidad} onChange={handleEspecialidadChange} required>
               <option value="">Seleccione Especialidad</option>

@@ -41,7 +41,7 @@ function Buscar() {
   return (
     <div>
       <HeaderPaciente />
-      <div className="buscar-wrapper"> {/* Contenedor principal agregado */}
+      <div className="buscar-wrapper">
         <div className="buscar-container">
           <input
             type="text"

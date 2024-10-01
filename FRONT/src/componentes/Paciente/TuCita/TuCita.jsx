@@ -10,6 +10,7 @@ const citasData = [
         hora: "14:00",
         especialidad: "Cardiología",
         doctor: "Dr. Juan Perez",
+        consultorio: "A1",
         pagado: false
     },
     {
@@ -18,6 +19,7 @@ const citasData = [
         hora: "09:00",
         especialidad: "Dermatología",
         doctor: "Dr. Javier Mendoza",
+        consultorio: "B12",
         pagado: true
     }
 ];
@@ -37,7 +39,7 @@ function TuCita() {
         <div>
             <HeaderPaciente />
             <div className="tu-cita">
-                <h1>Tus Citas</h1>
+                <h1>Estado de tus citas</h1>
                 {citas.length === 0 ? (
                     <p>No tienes citas reservadas.</p>
                 ) : (
@@ -48,6 +50,7 @@ function TuCita() {
                                 <th>Hora</th>
                                 <th>Especialidad</th>
                                 <th>Doctor</th>
+                                <th>Consultorio</th>
                                 <th>Estado de Pago</th>
                                 <th>Acciones</th>
                             </tr>
@@ -59,6 +62,7 @@ function TuCita() {
                                     <td>{cita.hora}</td>
                                     <td>{cita.especialidad}</td>
                                     <td>{cita.doctor}</td>
+                                    <td>{cita.consultorio}</td>
                                     <td>{cita.pagado ? "Pagado" : "Pendiente"}</td>
                                     <td>
                                         <button 

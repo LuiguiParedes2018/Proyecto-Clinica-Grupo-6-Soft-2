@@ -17,7 +17,7 @@ function Login() {
           <h1>INICIAR SESIÓN</h1>
           <div className="input-box">
             <FaUser className="icono" />
-            <input type="text" placeholder="Usuario" required />
+            <input type="text" placeholder="Correo electronico" required />
           </div>
           <div className="input-box">
             <FaLock className="icono" />

@@ -1,6 +1,6 @@
 .tu-cita {
     padding: 20px;
-    max-width: 800px;
+    max-width: 900px; /* Ajustado para acomodar la nueva columna */
     margin: 0 auto;
     background-color: #f5f5f5;
     border-radius: 8px;
@@ -18,7 +18,7 @@
 }
 
 .tu-cita th {
-    background-color: #007bff;
+    background-color: black; /* Cambiado a negro */
     color: white;
 }
 
@@ -29,3 +29,25 @@
 .tu-cita td:last-child {
     text-align: center;
 }
+
+/* Botón de cancelar personalizado */
+.btn-cancelar {
+    background-color: #ff4d4d; /* Rojo */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cancelar:hover {
+    background-color: #cc0000; /* Rojo más oscuro al hacer hover */
+}
+
+.btn-cancelar:disabled {
+    background-color: #ddd; /* Color gris cuando está deshabilitado */
+    cursor: not-allowed;
+}
+
