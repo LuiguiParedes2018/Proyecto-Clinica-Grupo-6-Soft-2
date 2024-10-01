@@ -28,9 +28,8 @@ function CrearHorario() {
     <div>
       <HeaderDoctor />
       <div className="crear-horario-container">
-        <h1>Selecciona tu horario</h1>
         <div className="input-box">
-          <label htmlFor="fecha">Fecha:</label>
+          <label htmlFor="fecha">Fecha</label>
           <input
             type="date"
             id="fecha"
@@ -40,7 +39,7 @@ function CrearHorario() {
           />
         </div>
         <div className="input-box">
-          <label htmlFor="hora">Hora:</label>
+          <label htmlFor="hora">Hora</label>
           <input
             type="time"
             id="hora"
@@ -50,7 +49,7 @@ function CrearHorario() {
           />
         </div>
         <div className="input-box">
-          <label htmlFor="consultorio">Consultorio:</label>
+          <label htmlFor="consultorio">Consultorio</label>
           <select className="select-doctor"
             id="consultorio"
             value={consultorio}
@@ -64,7 +63,7 @@ function CrearHorario() {
           </select>
         </div>
         <button className="confirm-button" onClick={confirmarHorario}>
-          Confirmar Horario
+          Confirmar
         </button>
       </div>
     </div>
