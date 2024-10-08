@@ -9,43 +9,34 @@ function CrearHorario() {
   const [hora, setHora] = useState("");
   const [consultorio, setConsultorio] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Para redirigir después de crear el horario
+  const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
 
-  const handleFechaChange = (event) => {
-    setFecha(event.target.value);
-  };
+  const doctorId = 1; // El ID del doctor logueado (Simulado)
 
-  const handleHoraChange = (event) => {
-    setHora(event.target.value);
-  };
-
-  const handleConsultorioChange = (event) => {
-    setConsultorio(event.target.value);
-  };
-
-  // Aquí debes obtener el ID del doctor logeado (En este caso simulado como doctor 1)
-  const doctorId = 1; 
-
+  // Crear Horario
   const confirmarHorario = async () => {
     try {
       const nuevoHorario = {
         fecha: fecha,
         hora: hora,
         consultorio: consultorio,
-        doctor: { id: doctorId }, // Asigna el doctor logueado al horario
+        doctor: { id: doctorId },
       };
 
-      const response = await createHorarioForDoctor(nuevoHorario);
-      console.log("Horario creado:", response.data);
-      // Redirigir a la página de "CitasCreadas" una vez el horario se haya creado
-      navigate("/doctor/citas-creadas"); 
+      // Crear el horario
+      const horarioResponse = await createHorarioForDoctor(nuevoHorario);
+      if (horarioResponse.data) {
+        alert("Horario creado correctamente.");
+        setError(""); // Limpiar errores
+        
+      }
     } catch (err) {
       setError("Error al crear el horario. Inténtalo de nuevo.");
       console.error("Error al crear el horario:", err);
     }
   };
 
-  // Verifica si todos los campos están completos
   const isFormValid = fecha && hora && consultorio;
 
   return (
@@ -58,7 +49,7 @@ function CrearHorario() {
             type="date"
             id="fecha"
             value={fecha}
-            onChange={handleFechaChange}
+            onChange={(e) => setFecha(e.target.value)}
             required
           />
         </div>
@@ -68,7 +59,7 @@ function CrearHorario() {
             type="time"
             id="hora"
             value={hora}
-            onChange={handleHoraChange}
+            onChange={(e) => setHora(e.target.value)}
             required
           />
         </div>
@@ -78,7 +69,7 @@ function CrearHorario() {
             className="select-doctor"
             id="consultorio"
             value={consultorio}
-            onChange={handleConsultorioChange}
+            onChange={(e) => setConsultorio(e.target.value)}
             required
           >
             <option value="">Seleccione Consultorio</option>
@@ -87,13 +78,19 @@ function CrearHorario() {
             <option value="Consultorio 3">Consultorio 3</option>
           </select>
         </div>
+
+        {/* Mostrar mensaje de éxito */}
+        {successMessage && <p className="success-message">{successMessage}</p>}
+        {/* Mostrar errores */}
         {error && <p className="error-message">{error}</p>}
+
+        {/* Botón para crear el horario */}
         <button
           className="confirm-button"
           onClick={confirmarHorario}
-          disabled={!isFormValid} // Deshabilita el botón si el formulario no es válido
+          disabled={!isFormValid}
         >
-          Confirmar
+          Crear Horario
         </button>
       </div>
     </div>

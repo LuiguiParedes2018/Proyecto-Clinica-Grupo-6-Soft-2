@@ -36,3 +36,4 @@ export const updateDoctor = (id, doctor) => {
 export const deleteDoctor = (id) => {
   return axios.delete(`${API_URL}/${id}`);
 };
+

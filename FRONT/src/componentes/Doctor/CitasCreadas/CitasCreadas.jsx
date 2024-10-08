@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import "./CitasCreadas.css";
 import HeaderDoctor from "../HeaderDoctor/HeaderDoctor.jsx";
-import { getHorariosByDoctor } from "../../../servicios/horarioService"; // Importa el servicio para obtener horarios
+import { getCitasByDoctorId } from "../../../servicios/citaService"; // Importa el servicio para obtener citas por doctor
 
 function CitasCreadas() {
-  const [horarios, setHorarios] = useState([]); // Estado para los horarios
+  const [citas, setCitas] = useState([]); // Estado para las citas
 
-  // Aquí puedes obtener el ID del doctor logeado (Simulado con doctorId 1)
+  // ID del doctor logueado (Simulado con doctorId 1)
   const doctorId = 1;
 
   useEffect(() => {
-    // Llamada a la API para obtener los horarios creados por el doctor
-    getHorariosByDoctor(doctorId)
+    // Llamada a la API para obtener las citas del doctor
+    getCitasByDoctorId(doctorId)
       .then((response) => {
-        setHorarios(response.data); // Guardar los horarios obtenidos
+        setCitas(response.data); // Guardar las citas obtenidas
       })
       .catch((error) => {
-        console.error("Error al obtener los horarios:", error);
+        console.error("Error al obtener las citas:", error);
       });
   }, [doctorId]);
 
@@ -24,15 +24,21 @@ function CitasCreadas() {
     <div>
       <HeaderDoctor />
       <div className="ver-citas-container">
-        {horarios.length === 0 ? (
-          <p className="mensaje-vacio">No tienes horarios creados.</p>
+        {citas.length === 0 ? (
+          <p className="mensaje-vacio">No tienes citas creadas.</p>
         ) : (
           <ul className="lista-citas">
-            {horarios.map((horario, index) => (
+            {citas.map((cita, index) => (
               <li key={index} className="cita-item">
-                <p><strong>Fecha:</strong> {horario.fecha}</p>
-                <p><strong>Hora:</strong> {horario.hora}</p>
-                <p><strong>Consultorio:</strong> {horario.consultorio}</p>
+                <p><strong>Fecha:</strong> {cita.horario.fecha}</p>
+                <p><strong>Hora:</strong> {cita.horario.hora}</p>
+                <p><strong>Consultorio:</strong> {cita.horario.consultorio}</p>
+                <p>
+                  <strong>Estado de la Cita:</strong>{" "}
+                  {cita.paciente
+                    ? `Reservada por ${cita.paciente.nombreCompleto}`
+                    : "Aún no reservada"}
+                </p>
               </li>
             ))}
           </ul>
