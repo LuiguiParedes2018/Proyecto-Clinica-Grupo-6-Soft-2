@@ -11,6 +11,7 @@ function HeaderDoctor() {
           <Link to="/perfil-doctor" className="nav-button">Perfil</Link>
           <Link to="/crear-horario" className="nav-button">Crear Horario</Link>
           <Link to="/citas-creadas" className="nav-button">Citas Creadas</Link>
+          <Link to="/horarios-doctor" className="nav-button">Horarios</Link>
           <Link to="/login-doctor" className="nav-button">Cerrar Sesión</Link>
         </nav>
       </div>
