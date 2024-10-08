@@ -149,10 +149,11 @@ p {
     .perfil-extra {
         flex-direction: column;
         gap: 20px;
+        width: 900px;
     }
 
     .perfil-card {
-        width: 100%;
+        width: 900px;
     }
 }
 

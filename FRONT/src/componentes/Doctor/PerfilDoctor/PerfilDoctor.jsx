@@ -1,72 +1,77 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./PerfilDoctor.css";
 import HeaderDoctor from "../HeaderDoctor/HeaderDoctor.jsx";
+import { getDoctorById, updateDoctor } from "../../../servicios/doctorService";
 
 function PerfilDoctor() {
   const [isEditing, setIsEditing] = useState(false);
-  const [doctorData, setDoctorData] = useState({
-    nombre: "Dr. Juan Pérez",
-    especialidad: "Cardiologia",
-    bio: "Experto en enfermedades cardíacas, con más de 10 años de experiencia. Ha realizado más de 500 procedimientos exitosos.",
-    imagen: "https://via.placeholder.com/150",
-    educacion: "Universidad Nacional de Medicina, 2010",
-    contacto: {
-      telefono: "+123 456 789",
-      correo: "juan.perez@clinica.com",
-    },
-    citasRealizadas: 100,
-    objetivoCitas: 500,
-  });
+  const [doctorData, setDoctorData] = useState(null); // Datos reales del doctor
+  const [formData, setFormData] = useState(null); // Datos temporales para edición
+  const doctorId = 1; // Suponiendo que el ID del doctor es 1 (esto debe obtenerse desde sesión o contexto en la aplicación)
 
-  const [formData, setFormData] = useState(doctorData);
+  useEffect(() => {
+    // Obtener los datos del doctor desde la API
+    getDoctorById(doctorId)
+      .then((response) => {
+        setDoctorData(response.data);
+        setFormData(response.data); // Inicializa el formulario con los datos del doctor
+      })
+      .catch((error) => {
+        console.error("Error al cargar el perfil del doctor:", error);
+      });
+  }, [doctorId]);
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);
-    if (isEditing) {
-      setDoctorData(formData); // Actualiza los datos del doctor con los del formulario
+    if (isEditing && formData) {
+      // Guardar los datos cuando se hace clic en "Guardar"
+      updateDoctor(doctorId, formData)
+        .then((response) => {
+          setDoctorData(response.data); // Actualiza los datos del doctor
+          alert("Perfil actualizado con éxito.");
+        })
+        .catch((error) => {
+          console.error("Error al actualizar el perfil:", error);
+          alert("Hubo un error al actualizar el perfil.");
+        });
     }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name.includes('.')) {
-      const [key, subKey] = name.split('.');
-      setFormData((prev) => ({
-        ...prev,
-        [key]: {
-          ...prev[key],
-          [subKey]: value,
-        },
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const porcentajeCitas = Math.round((doctorData.citasRealizadas / doctorData.objetivoCitas) * 100);
+  if (!doctorData) {
+    return <p>Cargando datos...</p>;
+  }
 
   return (
     <div>
       <HeaderDoctor />
       <div className="perfil-doctor-container">
         <div className="perfil-header">
-          <img src={doctorData.imagen} alt="Foto del doctor" className="perfil-imagen" />
+          <img
+            src={doctorData.imagen || "https://via.placeholder.com/150"}
+            alt="Foto del doctor"
+            className="perfil-imagen"
+          />
           <div className="perfil-detalles">
-            <h2>{isEditing ? <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} /> : doctorData.nombre}</h2>
-            <p>
-              <strong>Especialidad:</strong>
-              {isEditing ? <input type="text" name="especialidad" value={formData.especialidad} onChange={handleChange} /> : doctorData.especialidad}
-            </p>
-            <p>
+            <h2>
               {isEditing ? (
-                <textarea name="bio" value={formData.bio} onChange={handleChange} />
+                <input
+                  type="text"
+                  name="nombreCompleto"
+                  value={formData.nombreCompleto}
+                  onChange={handleChange}
+                />
               ) : (
-                doctorData.bio
+                doctorData.nombreCompleto
               )}
-            </p>
+            </h2>
             <button className="edit-button" onClick={handleEditClick}>
               {isEditing ? "Guardar" : "Editar Perfil"}
             </button>
@@ -75,44 +80,32 @@ function PerfilDoctor() {
 
         <div className="perfil-extra">
           <div className="perfil-card">
-            <h3>Educación</h3>
-            {isEditing ? (
-              <input type="text" name="educacion" value={formData.educacion} onChange={handleChange} />
-            ) : (
-              <p>{doctorData.educacion}</p>
-            )}
-          </div>
-          <div className="perfil-card">
             <h3>Contacto</h3>
             <p>
               <strong>Teléfono:</strong>
               {isEditing ? (
-                <input type="text" name="contacto.telefono" value={formData.contacto.telefono} onChange={handleChange} />
+                <input
+                  type="text"
+                  name="telefono"
+                  value={formData.telefono}
+                  onChange={handleChange}
+                />
               ) : (
-                doctorData.contacto.telefono
+                doctorData.telefono
               )}
             </p>
             <p>
               <strong>Email:</strong>
               {isEditing ? (
-                <input type="text" name="contacto.correo" value={formData.contacto.correo} onChange={handleChange} />
+                <input
+                  type="text"
+                  name="correo"
+                  value={formData.correo}
+                  onChange={handleChange}
+                />
               ) : (
-                doctorData.contacto.correo
+                doctorData.correo
               )}
-            </p>
-          </div>
-        </div>
-
-        <div className="perfil-citas">
-          <h3>Citas realizadas este año</h3>
-          <div className="citas-bar-container">
-            <div className="citas-bar">
-              <div className="citas-bar-fill" style={{ width: `${porcentajeCitas}%` }}>
-                <span className="citas-bar-text">{porcentajeCitas}%</span>
-              </div>
-            </div>
-            <p>
-              {doctorData.citasRealizadas} de {doctorData.objetivoCitas} citas completadas
             </p>
           </div>
         </div>
@@ -122,4 +115,3 @@ function PerfilDoctor() {
 }
 
 export default PerfilDoctor;
-

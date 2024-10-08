@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Buscar.css";
 import HeaderPaciente from "../HeaderPaciente/HeaderPaciente";
+import { getDoctores } from "../../../servicios/doctorService"; // Importar el servicio para obtener doctores
 
 function Buscar() {
   const [doctores, setDoctores] = useState([]);  
@@ -8,11 +9,11 @@ function Buscar() {
   const [doctoresFiltrados, setDoctoresFiltrados] = useState([]); 
 
   useEffect(() => {
-    fetch("/doctores.json") 
-      .then((response) => response.json())
-      .then((data) => {
-        setDoctores(data);         
-        setDoctoresFiltrados(data); 
+    // Utiliza el servicio getDoctores para obtener los doctores desde la API
+    getDoctores()
+      .then((response) => {
+        setDoctores(response.data); // Guardar los doctores obtenidos
+        setDoctoresFiltrados(response.data); // Iniciar con todos los doctores
       })
       .catch((error) => console.error("Error al cargar los doctores:", error));
   }, []);
@@ -23,15 +24,17 @@ function Buscar() {
 
   const handleBuscarClick = () => {
     if (busqueda === "") {
-      setDoctoresFiltrados(doctores); 
+      setDoctoresFiltrados(doctores); // Si la búsqueda está vacía, muestra todos los doctores
     } else {
+      // Filtrar doctores por nombre o especialidad
       const filtrados = doctores.filter((doctor) =>
-        doctor.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-        doctor.especialidad.toLowerCase().includes(busqueda.toLowerCase())
+        doctor.nombreCompleto.toLowerCase().includes(busqueda.toLowerCase()) || 
+        doctor.especialidad.nombre.toLowerCase().includes(busqueda.toLowerCase())
       );
-      setDoctoresFiltrados(filtrados); 
+      setDoctoresFiltrados(filtrados); // Actualizar la lista filtrada
     }
 
+    // Hacer scroll a la lista de doctores si existe
     const doctorList = document.querySelector(".doctor-list");
     if (doctorList) {
       doctorList.scrollIntoView({ behavior: "smooth" });
@@ -58,14 +61,14 @@ function Buscar() {
             doctoresFiltrados.map((doctor) => (
               <div key={doctor.id} className="doctor-card">
                 <img
-                  src={doctor.imagen}
-                  alt={`Foto de ${doctor.nombre}`}
+                  src={doctor.imagen} // Asegúrate de tener la URL de la imagen en el backend
+                  alt={`Foto de ${doctor.nombreCompleto}`}
                   className="doctor-imagen"
                 />
                 <div className="doctor-detalles">
-                  <h2>{doctor.nombre}</h2>
-                  <p><strong>Especialidad:</strong> {doctor.especialidad}</p>
-                  <p>{doctor.bio}</p>
+                  <h2>{doctor.nombreCompleto}</h2>
+                  <p><strong>Especialidad:</strong> {doctor.especialidad.nombre}</p>
+                  <p>{doctor.bio}</p> {/* Si tienes una descripción del doctor */}
                   <button className="ver-perfil-button">Ver Perfil</button>
                 </div>
               </div>
@@ -80,4 +83,3 @@ function Buscar() {
 }
 
 export default Buscar;
-

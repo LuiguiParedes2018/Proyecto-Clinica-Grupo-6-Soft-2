@@ -1,59 +1,85 @@
 import React, { useState, useEffect } from "react";
 import "./SacarCita.css";
 import HeaderPaciente from "../HeaderPaciente/HeaderPaciente";
+import { getEspecialidades } from "../../../servicios/especialidadService";
+import { getDoctoresByEspecialidad } from "../../../servicios/doctorService";
+import { getHorariosByDoctor } from "../../../servicios/horarioService";
+import { reservarCita } from "../../../servicios/citaService";
 
 function SacarCita() {
-  const [doctores, setDoctores] = useState([]);
   const [especialidades, setEspecialidades] = useState([]);
   const [especialidadSeleccionada, setEspecialidadSeleccionada] = useState("");
+  const [doctores, setDoctores] = useState([]);
   const [doctorSeleccionado, setDoctorSeleccionado] = useState("");
-  const [horarioSeleccionado, setHorarioSeleccionado] = useState("");
   const [horariosDisponibles, setHorariosDisponibles] = useState([]);
+  const [horarioSeleccionado, setHorarioSeleccionado] = useState("");
+  const [error, setError] = useState("");
 
-  // Cargar los doctores desde el JSON
   useEffect(() => {
-    fetch("/doctores.json")
-      .then((response) => response.json())
-      .then((data) => {
-        setDoctores(data);
-        // Obtener especialidades únicas
-        const especialidadesUnicas = [...new Set(data.map((doctor) => doctor.especialidad))];
-        setEspecialidades(especialidadesUnicas);
+    // Obtener especialidades desde la base de datos
+    getEspecialidades()
+      .then((response) => {
+        setEspecialidades(response.data);
       })
-      .catch((error) => console.error("Error al cargar los doctores:", error));
+      .catch((error) => console.error("Error al cargar las especialidades:", error));
   }, []);
 
   // Manejar el cambio de especialidad seleccionada
   const handleEspecialidadChange = (event) => {
-    setEspecialidadSeleccionada(event.target.value);
-    setDoctorSeleccionado(""); // Reiniciar el doctor cuando cambia la especialidad
+    const especialidadId = event.target.value;
+    setEspecialidadSeleccionada(especialidadId);
+    setDoctorSeleccionado("");
+    setHorarioSeleccionado("");
+    setHorariosDisponibles([]);
+
+    // Cargar doctores según la especialidad seleccionada
+    getDoctoresByEspecialidad(especialidadId)
+      .then((response) => {
+        setDoctores(response.data);
+      })
+      .catch((error) => console.error("Error al cargar los doctores:", error));
   };
 
   // Manejar el cambio de doctor seleccionado
   const handleDoctorChange = (event) => {
     const doctorId = event.target.value;
     setDoctorSeleccionado(doctorId);
-    // Aquí puedes definir los horarios disponibles para este doctor
-    setHorariosDisponibles(["9:00 AM", "11:00 AM", "2:00 PM", "4:00 PM"]); // Puedes cambiar esto por datos reales.
+    setHorarioSeleccionado("");
+
+    // Cargar horarios disponibles según el doctor seleccionado
+    getHorariosByDoctor(doctorId)
+      .then((response) => {
+        setHorariosDisponibles(response.data);
+      })
+      .catch((error) => console.error("Error al cargar los horarios:", error));
   };
 
-  // Manejar el cambio de horario
+  // Manejar el cambio de horario seleccionado
   const handleHorarioChange = (event) => {
     setHorarioSeleccionado(event.target.value);
   };
 
   const handleSacarCita = () => {
     if (especialidadSeleccionada && doctorSeleccionado && horarioSeleccionado) {
-      alert(`Cita creada con éxito para el Doctor ID: ${doctorSeleccionado} a las ${horarioSeleccionado}`);
-      // Aquí podrías hacer una llamada POST para guardar la cita en la base de datos.
+      // Crear cita para el paciente con la API
+      const nuevaCita = {
+        horario: { id: horarioSeleccionado },
+        doctor: { id: doctorSeleccionado },
+        paciente: { id: 1 }, // Aquí debes utilizar el ID del paciente logeado (esto es un ejemplo)
+      };
+
+      reservarCita(nuevaCita)
+        .then((response) => {
+          alert("Cita creada con éxito.");
+        })
+        .catch((error) => {
+          setError("Error al reservar la cita. Inténtalo de nuevo.");
+          console.error("Error al reservar la cita:", error);
+        });
     } else {
       alert("Por favor, completa todos los campos.");
     }
   };
-
-  const doctoresFiltrados = doctores.filter(
-    (doctor) => doctor.especialidad === especialidadSeleccionada
-  );
 
   return (
     <div>
@@ -69,9 +95,9 @@ function SacarCita() {
             onChange={handleEspecialidadChange}
           >
             <option value="">Selecciona una especialidad</option>
-            {especialidades.map((especialidad, index) => (
-              <option key={index} value={especialidad}>
-                {especialidad}
+            {especialidades.map((especialidad) => (
+              <option key={especialidad.id} value={especialidad.id}>
+                {especialidad.nombre}
               </option>
             ))}
           </select>
@@ -87,9 +113,9 @@ function SacarCita() {
               onChange={handleDoctorChange}
             >
               <option value="">Selecciona un doctor</option>
-              {doctoresFiltrados.map((doctor) => (
+              {doctores.map((doctor) => (
                 <option key={doctor.id} value={doctor.id}>
-                  {doctor.nombre}
+                  {doctor.nombreCompleto}
                 </option>
               ))}
             </select>
@@ -106,9 +132,9 @@ function SacarCita() {
               onChange={handleHorarioChange}
             >
               <option value="">Selecciona un horario</option>
-              {horariosDisponibles.map((horario, index) => (
-                <option key={index} value={horario}>
-                  {horario}
+              {horariosDisponibles.map((horario) => (
+                <option key={horario.id} value={horario.id}>
+                  {horario.fecha} - {horario.hora} - {horario.consultorio}
                 </option>
               ))}
             </select>
@@ -118,6 +144,8 @@ function SacarCita() {
         <button onClick={handleSacarCita} className="sacar-cita-button">
           Reservar Cita
         </button>
+
+        {error && <p className="error-message">{error}</p>}
       </div>
     </div>
   );

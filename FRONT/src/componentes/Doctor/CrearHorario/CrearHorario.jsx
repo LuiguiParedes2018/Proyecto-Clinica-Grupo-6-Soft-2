@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import "./CrearHorario.css";
 import HeaderDoctor from "../HeaderDoctor/HeaderDoctor.jsx";
+import { createHorarioForDoctor } from "../../../servicios/horarioService"; // Importa la función para crear el horario
+import { useNavigate } from "react-router-dom";
 
 function CrearHorario() {
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const [consultorio, setConsultorio] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate(); // Para redirigir después de crear el horario
 
   const handleFechaChange = (event) => {
     setFecha(event.target.value);
@@ -19,8 +23,26 @@ function CrearHorario() {
     setConsultorio(event.target.value);
   };
 
-  const confirmarHorario = () => {
-    alert(`Horario confirmado:\nFecha: ${fecha}\nHora: ${hora}\nConsultorio: ${consultorio}`);
+  // Aquí debes obtener el ID del doctor logeado (En este caso simulado como doctor 1)
+  const doctorId = 1; 
+
+  const confirmarHorario = async () => {
+    try {
+      const nuevoHorario = {
+        fecha: fecha,
+        hora: hora,
+        consultorio: consultorio,
+        doctor: { id: doctorId }, // Asigna el doctor logueado al horario
+      };
+
+      const response = await createHorarioForDoctor(nuevoHorario);
+      console.log("Horario creado:", response.data);
+      // Redirigir a la página de "CitasCreadas" una vez el horario se haya creado
+      navigate("/doctor/citas-creadas"); 
+    } catch (err) {
+      setError("Error al crear el horario. Inténtalo de nuevo.");
+      console.error("Error al crear el horario:", err);
+    }
   };
 
   // Verifica si todos los campos están completos
@@ -65,6 +87,7 @@ function CrearHorario() {
             <option value="Consultorio 3">Consultorio 3</option>
           </select>
         </div>
+        {error && <p className="error-message">{error}</p>}
         <button
           className="confirm-button"
           onClick={confirmarHorario}
@@ -78,4 +101,3 @@ function CrearHorario() {
 }
 
 export default CrearHorario;
-

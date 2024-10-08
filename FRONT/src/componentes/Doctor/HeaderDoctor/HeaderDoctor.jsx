@@ -8,10 +8,10 @@ function HeaderDoctor() {
       <div className="header-container">
         <h1 className="logo">Doctor</h1>
         <nav className="nav-buttons">
-          <Link to="/perfildoctor" className="nav-button">Perfil</Link>
-          <Link to="/crearhorario" className="nav-button">Crear Horario</Link>
-          <Link to="/citascreadas" className="nav-button">Citas Creadas</Link>
-          <Link to="/" className="nav-button">Cerrar Sesión</Link>
+          <Link to="/perfil-doctor" className="nav-button">Perfil</Link>
+          <Link to="/crear-horario" className="nav-button">Crear Horario</Link>
+          <Link to="/citas-creadas" className="nav-button">Citas Creadas</Link>
+          <Link to="/login-doctor" className="nav-button">Cerrar Sesión</Link>
         </nav>
       </div>
     </header>

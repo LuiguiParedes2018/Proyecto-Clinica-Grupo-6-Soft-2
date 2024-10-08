@@ -1,125 +1,120 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./PerfilPaciente.css";
 import HeaderPaciente from "../HeaderPaciente/HeaderPaciente.jsx";
+import { getPacienteById, updatePaciente } from "../../../servicios/pacienteService";
 
 function PerfilPaciente() {
   const [isEditing, setIsEditing] = useState(false);
-  const [pacienteData, setPacienteData] = useState({
-    nombre: "Carlos González",
-    edad: 30,
-    bio: "Paciente con un historial de salud activo.",
-    imagen: "https://via.placeholder.com/150",
-    contacto: {
-      telefono: "+123 456 789",
-      correo: "carlos.gonzalez@clinica.com",
-    },
-  });
+  const [pacienteData, setPacienteData] = useState(null); // Datos reales del paciente
+  const [formData, setFormData] = useState(null); // Datos temporales para edición
+  const pacienteId = 1; // Suponiendo que el ID del paciente es 1 (esto debe obtenerse desde sesión o contexto en la aplicación)
+
+  useEffect(() => {
+    // Obtener los datos del paciente desde la API
+    getPacienteById(pacienteId)
+      .then((response) => {
+        setPacienteData(response.data);
+        setFormData(response.data); // Inicializa el formulario con los datos del paciente
+      })
+      .catch((error) => {
+        console.error("Error al cargar el perfil del paciente:", error);
+      });
+  }, [pacienteId]);
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);
+    if (isEditing && formData) {
+      // Guardar los datos cuando se hace clic en "Guardar"
+      updatePaciente(pacienteId, formData)
+        .then((response) => {
+          setPacienteData(response.data); // Actualiza los datos del paciente
+          alert("Perfil actualizado con éxito.");
+        })
+        .catch((error) => {
+          console.error("Error al actualizar el perfil:", error);
+          alert("Hubo un error al actualizar el perfil.");
+        });
+    }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPacienteData((prevData) => ({
-      ...prevData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
 
-  const handleContactChange = (e) => {
-    const { name, value } = e.target;
-    setPacienteData((prevData) => ({
-      ...prevData,
-      contacto: {
-        ...prevData.contacto,
-        [name]: value,
-      },
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Aquí puedes agregar la lógica para guardar los cambios, por ejemplo, enviando a una API.
-    console.log("Datos actualizados:", pacienteData);
-    setIsEditing(false); // Cierra el modo de edición después de guardar
-  };
+  if (!pacienteData) {
+    return <p>Cargando datos...</p>;
+  }
 
   return (
     <div>
       <HeaderPaciente />
       <div className="perfil-paciente-container">
         <div className="perfil-header">
-          <img src={pacienteData.imagen} alt="Foto del paciente" className="perfil-imagen" />
-          {!isEditing ? (
-            <div className="perfil-detalles">
-              <h2>{pacienteData.nombre}</h2>
-              <p><strong>Edad:</strong> {pacienteData.edad}</p>
-              <p><strong>Teléfono:</strong> {pacienteData.contacto.telefono}</p>
-              <p><strong>Email:</strong> {pacienteData.contacto.correo}</p>
-              <p>{pacienteData.bio}</p>
-              <button className="edit-button" onClick={handleEditClick}>Editar Perfil</button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="perfil-detalles">
-              <div className="form-group">
-                <label htmlFor="nombre">Nombre:</label>
+          <img
+            src={pacienteData.imagen || "https://via.placeholder.com/150"}
+            alt="Foto del paciente"
+            className="perfil-imagen"
+          />
+          <div className="perfil-detalles">
+            <h2>
+              {isEditing ? (
                 <input
                   type="text"
-                  name="nombre"
-                  id="nombre"
-                  value={pacienteData.nombre}
+                  name="nombreCompleto"
+                  value={formData.nombreCompleto}
                   onChange={handleChange}
-                  required
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="edad">Edad:</label>
+              ) : (
+                pacienteData.nombreCompleto
+              )}
+            </h2>
+            <p>
+              <strong>Edad:</strong>
+              {isEditing ? (
                 <input
                   type="number"
                   name="edad"
-                  id="edad"
-                  value={pacienteData.edad}
+                  value={formData.edad}
                   onChange={handleChange}
-                  required
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="telefono">Teléfono:</label>
+              ) : (
+                pacienteData.edad
+              )}
+            </p>
+            <p>
+              <strong>Teléfono:</strong>
+              {isEditing ? (
                 <input
                   type="text"
                   name="telefono"
-                  id="telefono"
-                  value={pacienteData.contacto.telefono}
-                  onChange={handleContactChange}
-                  required
+                  value={formData.telefono}
+                  onChange={handleChange}
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="correo">Email:</label>
+              ) : (
+                pacienteData.telefono
+              )}
+            </p>
+            <p>
+              <strong>Email:</strong>
+              {isEditing ? (
                 <input
                   type="email"
                   name="correo"
-                  id="correo"
-                  value={pacienteData.contacto.correo}
-                  onChange={handleContactChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="bio">Biografía:</label>
-                <textarea
-                  name="bio"
-                  id="bio"
-                  value={pacienteData.bio}
+                  value={formData.correo}
                   onChange={handleChange}
-                  required
                 />
-              </div>
-              <button type="submit" className="save-button">Guardar Cambios</button>
-              <button type="button" className="cancel-button" onClick={handleEditClick}>Cancelar</button>
-            </form>
-          )}
+              ) : (
+                pacienteData.correo
+              )}
+            </p>
+            <button className="edit-button" onClick={handleEditClick}>
+              {isEditing ? "Guardar" : "Editar Perfil"}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -127,8 +122,3 @@ function PerfilPaciente() {
 }
 
 export default PerfilPaciente;
-
-
-
-
-
