@@ -29,11 +29,15 @@ function LoginPaciente() {
     navigate("/register-paciente"); // Cambia esta ruta según tu configuración de registro
   };
 
+  const redirectToDoctorLogin = () => {
+    navigate("/login-doctor"); // Redirigir al login del doctor
+  };
+
   return (
     <div className="login-paciente">
       <div className="cosas-login">
         <form onSubmit={handleLogin}>
-          <h1>INICIAR SESIÓN PACIENTE</h1>
+          <h1>INICIAR SESION PACIENTE</h1>
           <div className="input-box">
             <FaUser className="icono" />
             <input
@@ -68,6 +72,15 @@ function LoginPaciente() {
               ¿No tienes cuenta?{" "}
               <span onClick={redirectToRegister} className="register-link" style={{ cursor: "pointer", color: "blue" }}>
                 Regístrate ahora
+              </span>
+            </p>
+          </div>
+
+          <div className="login-doctor-link">
+            <p>
+              ¿No eres paciente?{" "}
+              <span onClick={redirectToDoctorLogin} className="doctor-login-link" style={{ cursor: "pointer", color: "blue" }}>
+                Inicia sesión como doctor
               </span>
             </p>
           </div>

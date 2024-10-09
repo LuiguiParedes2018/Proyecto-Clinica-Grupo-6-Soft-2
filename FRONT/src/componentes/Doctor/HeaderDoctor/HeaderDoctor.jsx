@@ -23,7 +23,7 @@ function HeaderDoctor() {
           <Link to="/crear-horario" className="nav-button">Crear Horario</Link>
           <Link to={`/citas-creadas/${doctorId}`} className="nav-button">Citas creadas</Link>
           <Link to={`/horarios-doctor/${doctorId}`} className="nav-button">Horarios</Link>
-          <button onClick={handleLogout} className="nav-button">Cerrar Sesión</button>
+          <button onClick={handleLogout} className="nav-button">Cerrar Sesion</button>
         </nav>
       </div>
     </header>

@@ -20,7 +20,7 @@ function HeaderPaciente() {
             className="nav-button" 
             onClick={() => localStorage.removeItem("pacienteId")} // Limpiar el localStorage al cerrar sesión
           >
-            Cerrar sesión
+            Cerrar sesion
           </Link>
         </nav>
       </div>

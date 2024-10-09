@@ -75,7 +75,7 @@ function SacarCita() {
           alert("Cita creada con éxito.");
         })
         .catch((error) => {
-          setError("Error al reservar la cita. Inténtalo de nuevo.");
+          setError("Esta cita ya fue reservada.");
           console.error("Error al reservar la cita:", error);
         });
     } else {
