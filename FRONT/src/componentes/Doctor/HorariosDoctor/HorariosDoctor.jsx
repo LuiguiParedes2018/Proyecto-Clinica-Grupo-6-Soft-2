@@ -36,9 +36,9 @@ function HorariosDoctor() {
           <ul className="lista-horarios">
             {horarios.map((horario, index) => (
               <li key={index} className="horario-item">
-                <p><strong>Fecha:</strong> {horario.fecha}</p>
-                <p><strong>Hora:</strong> {horario.hora}</p>
-                <p><strong>Consultorio:</strong> {horario.consultorio}</p>
+                <p><strong>Fecha: </strong> {horario.fecha}</p>
+                <p><strong>Hora: </strong> {horario.hora}</p>
+                <p><strong>Consultorio: </strong> {horario.consultorio}</p>
               </li>
             ))}
           </ul>

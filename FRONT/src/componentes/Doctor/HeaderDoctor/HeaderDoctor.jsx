@@ -19,7 +19,6 @@ function HeaderDoctor() {
       <div className="header-container">
         <h1 className="logo">Doctor</h1>
         <nav className="nav-buttons">
-          {/* Crear links dinámicos con el doctorId */}
           <Link to={`/perfil-doctor/${doctorId}`} className="nav-button">Perfil</Link>
           <Link to="/crear-horario" className="nav-button">Crear Horario</Link>
           <Link to={`/citas-creadas/${doctorId}`} className="nav-button">Citas creadas</Link>
