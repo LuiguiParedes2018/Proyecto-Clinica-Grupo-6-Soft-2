@@ -13,8 +13,13 @@ function LoginPaciente() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await loginPaciente(correo, password); 
-      navigate("/perfil-paciente"); 
+      const response = await loginPaciente(correo, password);
+      const pacienteId = response.data.id; // Obtener el ID del paciente desde la respuesta
+      
+      // Guardar el ID del paciente en localStorage
+      localStorage.setItem("pacienteId", pacienteId);
+      
+      navigate(`/perfil-paciente/${pacienteId}`); // Redirigir al perfil del paciente con su ID
     } catch (err) {
       setError("Credenciales incorrectas. Inténtalo de nuevo.");
     }
@@ -28,7 +33,7 @@ function LoginPaciente() {
     <div className="login-paciente">
       <div className="cosas-login">
         <form onSubmit={handleLogin}>
-          <h1>INICIAR SESION PACIENTE</h1>
+          <h1>INICIAR SESIÓN PACIENTE</h1>
           <div className="input-box">
             <FaUser className="icono" />
             <input

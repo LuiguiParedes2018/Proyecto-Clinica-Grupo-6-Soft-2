@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./LoginDoctor.css";
 import { FaUser, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { loginPaciente } from "../../../servicios/pacienteService";
+import { loginDoctor } from "../../../servicios/doctorService"; // Cambié a loginDoctor para autenticación del doctor
 
 function LoginDoctor() {
   const [correo, setCorreo] = useState("");
@@ -13,22 +13,29 @@ function LoginDoctor() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await loginPaciente(correo, password); 
-      navigate("/perfil-doctor"); 
+      const response = await loginDoctor(correo, password); 
+      
+      const doctorId = response.data.id; // Obtener el ID del doctor desde la respuesta
+
+      // Guardar el doctorId en localStorage
+      localStorage.setItem("doctorId", doctorId);
+
+      // Redirigir al perfil del doctor con su ID
+      navigate(`/perfil-doctor/${doctorId}`); 
     } catch (err) {
       setError("Credenciales incorrectas. Inténtalo de nuevo.");
     }
   };
 
   const redirectToRegister = () => {
-    navigate("/register-paciente"); // Cambia esta ruta según tu configuración de registro
+    navigate("/register-doctor"); // Cambié esta ruta a la de registro de doctor
   };
 
   return (
-    <div className="login-paciente">
+    <div className="login-doctor">
       <div className="cosas-login">
         <form onSubmit={handleLogin}>
-          <h1>INICIAR SESION DOCTOR</h1>
+          <h1>INICIAR SESIÓN DOCTOR</h1>
           <div className="input-box">
             <FaUser className="icono" />
             <input
@@ -56,7 +63,7 @@ function LoginDoctor() {
             </a>
           </div>
           <button type="submit">Ingresar</button>
-        
+
           <div className="registrarse">
             <p>
               ¿No tienes cuenta?{" "}

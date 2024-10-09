@@ -6,10 +6,15 @@ import { getCitasByDoctorId } from "../../../servicios/citaService"; // Importa 
 function CitasCreadas() {
   const [citas, setCitas] = useState([]); // Estado para las citas
 
-  // ID del doctor logueado (Simulado con doctorId 1)
-  const doctorId = 1;
+  // Obtener el ID del doctor desde localStorage
+  const doctorId = localStorage.getItem("doctorId");
 
   useEffect(() => {
+    if (!doctorId) {
+      console.error("No se pudo obtener el ID del doctor.");
+      return;
+    }
+
     // Llamada a la API para obtener las citas del doctor
     getCitasByDoctorId(doctorId)
       .then((response) => {

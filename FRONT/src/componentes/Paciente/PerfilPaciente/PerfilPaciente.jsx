@@ -2,23 +2,30 @@ import React, { useState, useEffect } from "react";
 import "./PerfilPaciente.css";
 import HeaderPaciente from "../HeaderPaciente/HeaderPaciente.jsx";
 import { getPacienteById, updatePaciente } from "../../../servicios/pacienteService";
+import { useParams } from "react-router-dom";
 
 function PerfilPaciente() {
+  const { id } = useParams(); // Obtener el ID del paciente desde la URL
   const [isEditing, setIsEditing] = useState(false);
   const [pacienteData, setPacienteData] = useState(null); // Datos reales del paciente
   const [formData, setFormData] = useState(null); // Datos temporales para edición
-  const pacienteId = 1; // Suponiendo que el ID del paciente es 1 (esto debe obtenerse desde sesión o contexto en la aplicación)
+  const pacienteId = id || localStorage.getItem("pacienteId"); // Usar el ID de la URL o de localStorage
 
   useEffect(() => {
-    // Obtener los datos del paciente desde la API
-    getPacienteById(pacienteId)
-      .then((response) => {
-        setPacienteData(response.data);
-        setFormData(response.data); // Inicializa el formulario con los datos del paciente
-      })
-      .catch((error) => {
-        console.error("Error al cargar el perfil del paciente:", error);
-      });
+    // Verificar si existe un ID de paciente
+    if (pacienteId) {
+      // Obtener los datos del paciente desde la API usando el ID
+      getPacienteById(pacienteId)
+        .then((response) => {
+          setPacienteData(response.data);
+          setFormData(response.data); // Inicializa el formulario con los datos del paciente
+        })
+        .catch((error) => {
+          console.error("Error al cargar el perfil del paciente:", error);
+        });
+    } else {
+      console.error("No se encontró el ID del paciente.");
+    }
   }, [pacienteId]);
 
   const handleEditClick = () => {

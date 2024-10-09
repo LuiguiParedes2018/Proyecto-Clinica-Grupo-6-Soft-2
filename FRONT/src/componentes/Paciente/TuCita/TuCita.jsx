@@ -5,19 +5,21 @@ import { getCitasByPacienteId } from "../../../servicios/citaService";
 
 function TuCita() {
   const [citas, setCitas] = useState([]);
-
-  // Aquí debes obtener el ID del paciente logeado (por ejemplo, 1)
-  const pacienteId = 1;
+  
+  // Obtener el ID del paciente desde localStorage
+  const pacienteId = localStorage.getItem("pacienteId");
 
   useEffect(() => {
-    // Obtener citas del paciente logeado
-    getCitasByPacienteId(pacienteId)
-      .then((response) => {
-        setCitas(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener las citas:", error);
-      });
+    if (pacienteId) {
+      // Obtener citas del paciente logeado
+      getCitasByPacienteId(pacienteId)
+        .then((response) => {
+          setCitas(response.data);
+        })
+        .catch((error) => {
+          console.error("Error al obtener las citas:", error);
+        });
+    }
   }, [pacienteId]);
 
   // Función para cancelar una cita

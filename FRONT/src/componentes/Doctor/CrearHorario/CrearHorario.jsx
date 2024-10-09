@@ -12,16 +12,22 @@ function CrearHorario() {
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
-  const doctorId = 1; // El ID del doctor logueado (Simulado)
+  // Obtener el ID del doctor desde localStorage
+  const doctorId = localStorage.getItem("doctorId");
 
   // Crear Horario
   const confirmarHorario = async () => {
+    if (!doctorId) {
+      setError("No se pudo obtener el ID del doctor.");
+      return;
+    }
+
     try {
       const nuevoHorario = {
         fecha: fecha,
         hora: hora,
         consultorio: consultorio,
-        doctor: { id: doctorId },
+        doctor: { id: doctorId }, // Usar el doctorId desde localStorage
       };
 
       // Crear el horario
@@ -29,7 +35,7 @@ function CrearHorario() {
       if (horarioResponse.data) {
         alert("Horario creado correctamente.");
         setError(""); // Limpiar errores
-        
+        setSuccessMessage("Horario creado con éxito.");
       }
     } catch (err) {
       setError("Error al crear el horario. Inténtalo de nuevo.");

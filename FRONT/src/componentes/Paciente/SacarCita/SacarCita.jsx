@@ -15,6 +15,8 @@ function SacarCita() {
   const [horarioSeleccionado, setHorarioSeleccionado] = useState("");
   const [error, setError] = useState("");
 
+  const pacienteId = localStorage.getItem("pacienteId"); // Obtener el ID del paciente logeado desde localStorage
+
   useEffect(() => {
     // Obtener especialidades desde la base de datos
     getEspecialidades()
@@ -65,7 +67,7 @@ function SacarCita() {
       const nuevaCita = {
         horario: { id: horarioSeleccionado },
         doctor: { id: doctorSeleccionado },
-        paciente: { id: 1 }, // Aquí debes utilizar el ID del paciente logeado (esto es un ejemplo)
+        paciente: { id: pacienteId }, // Aquí usamos el ID del paciente logeado desde localStorage
       };
 
       reservarCita(nuevaCita)

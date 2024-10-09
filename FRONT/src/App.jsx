@@ -23,17 +23,17 @@ function App(){
       <Routes>
         <Route path="/" element={<LoginPaciente/>}/>
         <Route path="/register-paciente" element={<RegisterPaciente/>}/>
-        <Route path="/perfil-paciente" element={<PerfilPaciente/>}/>
+        <Route path="/perfil-paciente/:id" element={<PerfilPaciente />} />
         <Route path="/sacar-cita" element={<SacarCita/>}/>
         <Route path="/tu-cita" element={<TuCita/>}/>
         <Route path="/buscar" element={<Buscar/>}/>
 
         <Route path="/login-doctor" element={<LoginDoctor/>}/>
         <Route path="/register-doctor" element={<RegisterDoctor/>}/>
-        <Route path="/perfil-doctor" element={<PerfilDoctor/>}/>
+        <Route path="/perfil-doctor/:id" element={<PerfilDoctor/>}/>
         <Route path="/crear-horario" element={<CrearHorario/>}/>
-        <Route path="/horarios-doctor" element={<HorariosDoctor/>}/>
-        <Route path="/citas-creadas" element={<CitasCreadas/>}/>
+        <Route path="/horarios-doctor/:id" element={<HorariosDoctor />} />
+        <Route path="/citas-creadas/:id" element={<CitasCreadas/>}/>
       </Routes>
     </Router>
   )

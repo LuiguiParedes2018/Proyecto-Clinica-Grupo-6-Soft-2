@@ -2,16 +2,17 @@ import React, { useState, useEffect } from "react";
 import "./PerfilDoctor.css";
 import HeaderDoctor from "../HeaderDoctor/HeaderDoctor.jsx";
 import { getDoctorById, updateDoctor } from "../../../servicios/doctorService";
+import { useParams } from "react-router-dom"; // Importar useParams para obtener el ID desde la URL
 
 function PerfilDoctor() {
+  const { id } = useParams(); // Obtener el ID del doctor desde la URL
   const [isEditing, setIsEditing] = useState(false);
   const [doctorData, setDoctorData] = useState(null); // Datos reales del doctor
   const [formData, setFormData] = useState(null); // Datos temporales para edición
-  const doctorId = 1; // Suponiendo que el ID del doctor es 1 (esto debe obtenerse desde sesión o contexto en la aplicación)
 
   useEffect(() => {
-    // Obtener los datos del doctor desde la API
-    getDoctorById(doctorId)
+    // Obtener los datos del doctor desde la API usando el ID de la URL
+    getDoctorById(id)
       .then((response) => {
         setDoctorData(response.data);
         setFormData(response.data); // Inicializa el formulario con los datos del doctor
@@ -19,13 +20,13 @@ function PerfilDoctor() {
       .catch((error) => {
         console.error("Error al cargar el perfil del doctor:", error);
       });
-  }, [doctorId]);
+  }, [id]); // Se ejecuta cuando cambia el ID
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);
     if (isEditing && formData) {
       // Guardar los datos cuando se hace clic en "Guardar"
-      updateDoctor(doctorId, formData)
+      updateDoctor(id, formData)
         .then((response) => {
           setDoctorData(response.data); // Actualiza los datos del doctor
           alert("Perfil actualizado con éxito.");
