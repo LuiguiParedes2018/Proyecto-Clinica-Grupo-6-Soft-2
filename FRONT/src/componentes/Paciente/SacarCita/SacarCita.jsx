@@ -88,7 +88,7 @@ function SacarCita() {
       <HeaderPaciente />
       <div className="sacar-cita-container">
         
-        {/* Selección de especialidad */}
+        {/* Seleccion de especialidad */}
         <div className="form-group">
           <label htmlFor="especialidad">Especialidad</label>
           <select
@@ -105,7 +105,7 @@ function SacarCita() {
           </select>
         </div>
 
-        {/* Selección de doctor */}
+        {/* Seleccion de doctor */}
         {especialidadSeleccionada && (
           <div className="form-group">
             <label htmlFor="doctor">Doctor</label>
@@ -124,7 +124,7 @@ function SacarCita() {
           </div>
         )}
 
-        {/* Selección de horario */}
+        {/* Seleccion de horario */}
         {doctorSeleccionado && (
           <div className="form-group">
             <label htmlFor="horario">Horario</label>

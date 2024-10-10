@@ -2,17 +2,19 @@ import React, { useState, useEffect } from "react";
 import "./RegisterDoctor.css";
 import { FaUser, FaLock, FaEnvelope, FaPhone, FaBriefcase } from "react-icons/fa";
 import { registerDoctor } from "../../../servicios/doctorService";
-import { getEspecialidades } from "../../../servicios/especialidadService"; // Para obtener las especialidades
+import { getEspecialidades } from "../../../servicios/especialidadService"; 
 import { useNavigate } from "react-router-dom";
 
 function RegisterDoctor() {
   const [nombreCompleto, setNombreCompleto] = useState("");
   const [correo, setCorreo] = useState("");
   const [telefono, setTelefono] = useState("");
-  const [especialidadId, setEspecialidadId] = useState(""); // Ahora se maneja el ID de la especialidad
-  const [especialidades, setEspecialidades] = useState([]); // Almacenar las especialidades disponibles
+  const [especialidadId, setEspecialidadId] = useState(""); 
+  const [especialidades, setEspecialidades] = useState([]); 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [codigoSecreto, setCodigoSecreto] = useState("");
+  const [codigoSecretoCorrecto, setCodigoSecretoCorrecto] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -25,10 +27,19 @@ function RegisterDoctor() {
       .catch((error) => {
         console.error("Error al cargar las especialidades:", error);
       });
+
+    // Cargar el código secreto desde el archivo JSON
+    fetch("/codigo.json")
+      .then((response) => response.json())
+      .then((data) => {
+        // Suponemos que siempre será el primer código en el archivo
+        setCodigoSecretoCorrecto(data[0].codigo);
+      })
+      .catch((error) => console.error("Error al cargar el código secreto:", error));
   }, []);
 
   const handleEspecialidadChange = (event) => {
-    setEspecialidadId(event.target.value); // Almacena el ID de la especialidad seleccionada
+    setEspecialidadId(event.target.value); 
   };
 
   const handleSubmit = async (e) => {
@@ -39,12 +50,18 @@ function RegisterDoctor() {
       return;
     }
 
-    // Crear el objeto doctor, asegurándose de enviar el ID de la especialidad
+    // Validar el código secreto
+    if (codigoSecreto !== codigoSecretoCorrecto) {
+      setError("Código secreto incorrecto.");
+      return;
+    }
+
+    // Crear el objeto doctor
     const nuevoDoctor = {
       nombreCompleto,
       correo,
       telefono,
-      especialidad: { id: especialidadId }, // Enviar la especialidad como un objeto con ID
+      especialidad: { id: especialidadId }, 
       password,
     };
 
@@ -122,6 +139,16 @@ function RegisterDoctor() {
               placeholder="Confirmar Contraseña"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-box">
+            <FaLock className="icono" />
+            <input
+              type="text"
+              placeholder="Código Secreto"
+              value={codigoSecreto}
+              onChange={(e) => setCodigoSecreto(e.target.value)}
               required
             />
           </div>

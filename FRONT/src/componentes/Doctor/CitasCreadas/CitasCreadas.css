@@ -31,6 +31,7 @@ h1 {
     list-style-type: none;
     padding: 0;
     width: 100%;
+    background-color: yellow;
 }
 
 .cita-item {
