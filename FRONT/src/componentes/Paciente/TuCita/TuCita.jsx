@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./TuCita.css";
 import HeaderPaciente from "../HeaderPaciente/HeaderPaciente";
-import { getCitasByPacienteId } from "../../../servicios/citaService";
+import { getCitasByPacienteId, deleteCita } from "../../../servicios/citaService"; // Importa deleteCita
 
 function TuCita() {
   const [citas, setCitas] = useState([]);
@@ -23,11 +23,17 @@ function TuCita() {
   }, [pacienteId]);
 
   // Función para cancelar una cita
-  const cancelarCita = (id) => {
+  const cancelarCita = async (id) => {
     const confirmacion = window.confirm("¿Estás seguro de que deseas cancelar esta cita?");
     if (confirmacion) {
-      // Aquí podrías hacer una llamada para eliminar la cita en la base de datos.
-      setCitas(citas.filter((cita) => cita.id !== id));
+      try {
+        await deleteCita(id); // Llamada a la API para eliminar la cita
+        setCitas(citas.filter((cita) => cita.id !== id)); // Actualizar el estado para eliminar la cita cancelada
+        alert("Cita cancelada con éxito.");
+      } catch (error) {
+        console.error("Error al cancelar la cita:", error);
+        alert("Hubo un error al cancelar la cita.");
+      }
     }
   };
 
