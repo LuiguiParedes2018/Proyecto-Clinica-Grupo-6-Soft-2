@@ -85,3 +85,7 @@ select {
 select option {
     color: black;
 }
+
+.cosas-register .error-message {
+    transform: translateY(10px);
+}

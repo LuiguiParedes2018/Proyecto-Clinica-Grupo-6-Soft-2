@@ -16,6 +16,7 @@ function RegisterDoctor() {
   const [codigoSecreto, setCodigoSecreto] = useState("");
   const [codigoSecretoCorrecto, setCodigoSecretoCorrecto] = useState("");
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
   const navigate = useNavigate();
 
   // Cargar especialidades cuando el componente se monta
@@ -32,7 +33,6 @@ function RegisterDoctor() {
     fetch("/codigo.json")
       .then((response) => response.json())
       .then((data) => {
-        // Suponemos que siempre será el primer código en el archivo
         setCodigoSecretoCorrecto(data[0].codigo);
       })
       .catch((error) => console.error("Error al cargar el código secreto:", error));
@@ -42,18 +42,38 @@ function RegisterDoctor() {
     setEspecialidadId(event.target.value); 
   };
 
+  const validateFields = () => {
+    const errors = {};
+    if (nombreCompleto.length <= 2) {
+        errors.nombreCompleto = "Nombre muy corto, debe ser más largo.";
+    }
+    if (!correo.endsWith("@gmail.com") && !correo.endsWith("@hotmail.com")) {
+        errors.correo = "Debe terminar en'@gmail.com' o '@hotmail.com'.";
+    }
+    if (!/^\d{9}$/.test(telefono)) {
+        errors.telefono = "No puede incluir letras y debe tener 9 numeros";
+    }
+    if (!/^\S+$/.test(password)) {
+        errors.password = "La contraseña no puede contener espacios en blanco.";
+    }
+    if (password.length <= 5) {
+        errors.password = "La contraseña debe tener más de 5 caracteres.";
+    }
+    if (password !== confirmPassword) {
+        errors.confirmPassword = "Las contraseñas no coinciden.";
+    }
+    return errors;
+};
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Validar que las contraseñas coincidan
-    if (password !== confirmPassword) {
-      setError("Las contraseñas no coinciden.");
-      return;
-    }
+    setError("");
+    const errors = validateFields();
+    setFieldErrors(errors);
 
-    // Validar el código secreto
-    if (codigoSecreto !== codigoSecretoCorrecto) {
-      setError("Código secreto incorrecto.");
-      return;
+    if (Object.keys(errors).length > 0) {
+      return; // Detener la ejecución si hay errores
     }
 
     // Crear el objeto doctor
@@ -90,6 +110,7 @@ function RegisterDoctor() {
               onChange={(e) => setNombreCompleto(e.target.value)}
               required
             />
+            {fieldErrors.nombreCompleto && <p className="error-message">{fieldErrors.nombreCompleto}</p>}
           </div>
           <div className="input-box">
             <FaEnvelope className="icono" />
@@ -100,6 +121,7 @@ function RegisterDoctor() {
               onChange={(e) => setCorreo(e.target.value)}
               required
             />
+            {fieldErrors.correo && <p className="error-message">{fieldErrors.correo}</p>}
           </div>
           <div className="input-box">
             <FaPhone className="icono" />
@@ -110,6 +132,7 @@ function RegisterDoctor() {
               onChange={(e) => setTelefono(e.target.value)}
               required
             />
+            {fieldErrors.telefono && <p className="error-message">{fieldErrors.telefono}</p>}
           </div>
           <div className="input-box">
             <FaBriefcase className="icono" />
@@ -131,6 +154,7 @@ function RegisterDoctor() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            {fieldErrors.password && <p className="error-message">{fieldErrors.password}</p>}
           </div>
           <div className="input-box">
             <FaLock className="icono" />
@@ -141,6 +165,7 @@ function RegisterDoctor() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
+            {fieldErrors.confirmPassword && <p className="error-message">{fieldErrors.confirmPassword}</p>}
           </div>
           <div className="input-box">
             <FaLock className="icono" />

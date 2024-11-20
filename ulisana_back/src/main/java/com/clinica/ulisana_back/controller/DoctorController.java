@@ -74,11 +74,29 @@ public class DoctorController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Doctor> registerDoctor(@RequestBody Doctor doctor) {
+    public ResponseEntity<?> registerDoctor(@RequestBody Doctor doctor) {
+        // Validaciones
+        if (doctor.getTelefono() == null || !doctor.getTelefono().matches("\\d{9}")) {
+            return ResponseEntity.status(400).body("El número de teléfono debe contener exactamente 9 dígitos y no puede incluir letras.");
+        }
+        if (doctor.getCorreo() == null ||
+                (!doctor.getCorreo().endsWith("@gmail.com") && !doctor.getCorreo().endsWith("@hotmail.com"))) {
+            return ResponseEntity.status(400).body("El correo debe terminar con '@gmail.com' o '@hotmail.com'.");
+        }
+        if (doctor.getNombreCompleto() == null || doctor.getNombreCompleto().length() <= 2) {
+            return ResponseEntity.status(400).body("El nombre debe tener más de 2 caracteres.");
+        }
+        if (doctor.getPassword() == null || doctor.getPassword().length() <= 5) {
+            return ResponseEntity.status(400).body("La contraseña debe tener más de 5 caracteres.");
+        }
+        if (!doctor.getPassword().matches("^[\\S]+$")) {
+            return ResponseEntity.status(400).body("La contraseña no debe contener espacios.");
+        }
+
         // Validar si el correo ya existe
         Optional<Doctor> existingDoctor = doctorService.findByCorreo(doctor.getCorreo());
         if (existingDoctor.isPresent()) {
-            return ResponseEntity.status(409).body(null); // El correo ya está registrado
+            return ResponseEntity.status(409).body("El correo ya está registrado."); // El correo ya está registrado
         }
 
         // Guardar el nuevo doctor
@@ -86,10 +104,8 @@ public class DoctorController {
         return ResponseEntity.ok(nuevoDoctor);
     }
 
-    @GetMapping("/especialidad/{especialidadId}")
-    public List<Doctor> getDoctoresByEspecialidad(@PathVariable Long especialidadId) {
-        return doctorService.findByEspecialidadId(especialidadId);
-    }
+
+
 
 
 

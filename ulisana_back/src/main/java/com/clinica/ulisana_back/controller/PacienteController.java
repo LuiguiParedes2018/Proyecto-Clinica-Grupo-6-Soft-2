@@ -72,15 +72,36 @@ public class PacienteController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<Paciente> registerPaciente(@RequestBody Paciente paciente) {
-        Optional<Paciente> existingPaciente = pacienteService.findByCorreo(paciente.getCorreo());
-        if (existingPaciente.isPresent()) {
-            return ResponseEntity.status(409).body(null);
+    public ResponseEntity<?> registerPaciente(@RequestBody Paciente paciente) {
+        // Validaciones
+        if (paciente.getTelefono() == null || !paciente.getTelefono().matches("\\d{9}")) {
+            return ResponseEntity.status(400).body("El número de teléfono debe contener exactamente 9 dígitos y no puede incluir letras.");
+        }
+        if (paciente.getCorreo() == null ||
+                (!paciente.getCorreo().endsWith("@gmail.com") && !paciente.getCorreo().endsWith("@hotmail.com"))) {
+            return ResponseEntity.status(400).body("El correo debe terminar con '@gmail.com' o '@hotmail.com'.");
+        }
+        if (paciente.getNombreCompleto() == null || paciente.getNombreCompleto().length() <= 2) {
+            return ResponseEntity.status(400).body("El nombre debe tener más de 2 caracteres.");
+        }
+        if (paciente.getPassword() == null || paciente.getPassword().length() <= 5) {
+            return ResponseEntity.status(400).body("La contraseña debe tener más de 5 caracteres.");
+        }
+        if (!paciente.getPassword().matches("^[\\S]+$")) {
+            return ResponseEntity.status(400).body("La contraseña no debe contener espacios.");
         }
 
+        // Validar si el correo ya existe
+        Optional<Paciente> existingPaciente = pacienteService.findByCorreo(paciente.getCorreo());
+        if (existingPaciente.isPresent()) {
+            return ResponseEntity.status(409).body("El correo ya está registrado."); // El correo ya está registrado
+        }
+
+        // Guardar el nuevo paciente
         Paciente nuevoPaciente = pacienteService.save(paciente);
         return ResponseEntity.ok(nuevoPaciente);
     }
+
 
 
 }
