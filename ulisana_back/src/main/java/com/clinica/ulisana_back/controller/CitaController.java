@@ -96,5 +96,14 @@ public class CitaController {
         return ResponseEntity.ok(nuevaCita);
     }
 
+    @PutMapping("/{id}/marcar-pagada")
+    public ResponseEntity<?> marcarCitaComoPagada(@PathVariable Long id) {
+        try {
+            Cita citaActualizada = citaService.marcarCitaComoPagada(id);
+            return ResponseEntity.ok(citaActualizada);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 
 }

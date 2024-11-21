@@ -104,7 +104,14 @@ public class DoctorController {
         return ResponseEntity.ok(nuevoDoctor);
     }
 
-
+    @GetMapping("/especialidad/{especialidadId}")
+    public ResponseEntity<List<Doctor>> getDoctoresByEspecialidad(@PathVariable Long especialidadId) {
+        List<Doctor> doctores = doctorService.findByEspecialidadId(especialidadId);
+        if (doctores.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(doctores);
+    }
 
 
 

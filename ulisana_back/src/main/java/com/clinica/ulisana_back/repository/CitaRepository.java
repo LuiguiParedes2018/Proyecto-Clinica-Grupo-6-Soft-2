@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CitaRepository extends JpaRepository<Cita, Long> {
-    List<Cita> findByDoctorId(Long doctorId);  // Obtener todas las citas de un doctor
-    List<Cita> findByPacienteId(Long pacienteId);  // Obtener todas las citas de un paciente
+    List<Cita> findByDoctorId(Long doctorId);
+    List<Cita> findByPacienteId(Long pacienteId);
     Optional<Cita> findByHorarioId(Long horarioId);
+
+    // Nuevo: Obtener citas pagadas de un doctor
+    List<Cita> findByDoctorIdAndCitaPagadaTrue(Long doctorId);
 }

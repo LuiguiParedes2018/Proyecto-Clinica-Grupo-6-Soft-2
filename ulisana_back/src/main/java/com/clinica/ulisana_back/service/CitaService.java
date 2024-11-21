@@ -45,4 +45,16 @@ public class CitaService {
     public Optional<Cita> findByHorarioId(Long horarioId) {
         return citaRepository.findByHorarioId(horarioId);
     }
+
+    public Cita marcarCitaComoPagada(Long citaId) {
+        Optional<Cita> citaOptional = citaRepository.findById(citaId);
+
+        if (citaOptional.isPresent()) {
+            Cita cita = citaOptional.get();
+            cita.setCitaPagada(true);
+            return citaRepository.save(cita); // Actualizar en la base de datos
+        } else {
+            throw new RuntimeException("La cita con ID " + citaId + " no fue encontrada.");
+        }
+    }
 }

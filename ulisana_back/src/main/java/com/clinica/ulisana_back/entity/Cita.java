@@ -24,6 +24,9 @@ public class Cita {
     @JoinColumn(name = "paciente_id")
     private Paciente paciente;
 
+    @Column(name = "cita_pagada", nullable = false)
+    private boolean citaPagada = false; // Valor por defecto: false
+
     public Horario getHorario() {
         return horario;
     }

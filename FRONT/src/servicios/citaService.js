@@ -37,3 +37,7 @@ export const deleteCita = (id) => {
   return axios.delete(`${API_URL}/${id}`);
 };
 
+// Marcar una cita como pagada
+export const marcarCitaComoPagada = (id) => {
+  return axios.put(`${API_URL}/${id}/marcar-pagada`);
+};
