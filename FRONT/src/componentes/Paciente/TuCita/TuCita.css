@@ -52,3 +52,39 @@
     cursor: not-allowed;
 }
 
+/* HISTORIAL COMPLETO */
+/* Contenedor para el título y el botón */
+.tu-cita-header {
+    display: flex;
+    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: center; /* Centra horizontalmente el contenedor */
+    gap: 20px; /* Espacio entre el título y el botón */
+    margin-bottom: 20px;
+}
+
+/* Estilo para el botón de historial */
+.btn-historial {
+    background-color: #4caf50; /* Verde */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Estilos para los estados */
+.estado-pendiente {
+    color: red; /* Rojo para "Pendiente" */
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); /* Sombra roja clara */
+}
+
+.estado-pagada {
+    color: green; /* Verde para "Pagada" */
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5); /* Sombra verde clara */
+}
+
+

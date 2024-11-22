@@ -8,6 +8,7 @@ import PerfilPaciente from "./componentes/Paciente/PerfilPaciente/PerfilPaciente
 import SacarCita from "./componentes/Paciente/SacarCita/SacarCita.jsx"
 import TuCita from "./componentes/Paciente/TuCita/TuCita.jsx"
 import Buscar from "./componentes/Paciente/Buscar/Buscar.jsx"
+import HistorialCitas from "./componentes/Paciente/HistorialCitas/HistorialCitas.jsx"
 
 //funciones del doctor
 import LoginDoctor from "./componentes/Doctor/LoginDoctor/LoginDoctor.jsx"
@@ -34,6 +35,7 @@ function App(){
         <Route path="/crear-horario" element={<CrearHorario/>}/>
         <Route path="/horarios-doctor/:id" element={<HorariosDoctor />} />
         <Route path="/citas-creadas/:id" element={<CitasCreadas/>}/>
+        <Route path="/historial-citas" element={<HistorialCitas />} />
       </Routes>
     </Router>
   )
