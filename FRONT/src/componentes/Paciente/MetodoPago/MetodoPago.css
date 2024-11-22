@@ -1,0 +1,129 @@
+/* Contenedor principal */
+.metodo-pago {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    max-width: 500px;
+    margin: 50px auto;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  
+  /* Título principal */
+  .metodo-pago h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Opciones de pago */
+  .opcion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .icono-pago {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+  }
+  
+  .btn-opcion {
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-opcion.activo {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .btn-opcion:hover {
+    background-color: #d6d6d6;
+  }
+  
+  /* Formulario de tarjeta */
+  .formulario-tarjeta {
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  .formulario-tarjeta h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .formulario-tarjeta input {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 90%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* QR de billetera electrónica */
+  .qr-billetera {
+    margin-top: 20px;
+  }
+  
+  .qr-billetera h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .qr-billetera img {
+    width: 150px;
+    height: 150px;
+  }
+  
+  /* Botones de acción */
+  .botones-acciones {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .btn-accion {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-accion.confirmar {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .btn-accion.confirmar:hover {
+    background-color: #45a049;
+  }
+  
+  .btn-accion.volver {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .btn-accion.volver:hover {
+    background-color: #e53935;
+  }
+  

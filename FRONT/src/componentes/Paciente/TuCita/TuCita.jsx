@@ -85,14 +85,24 @@ function TuCita() {
                 </span>
                 </td>
                 <td>
+                <td>
                   {!cita.citaPagada && (
-                    <button
-                      onClick={() => cancelarCita(cita.id)}
-                      className="btn-cancelar"
-                    >
-                      Cancelar
-                    </button>
+                    <>
+                      <button
+                        onClick={() => cancelarCita(cita.id)}
+                        className="btn-cancelar"
+                      >
+                        Cancelar
+                      </button>
+                      <button
+                        onClick={() => navigate(`/metodo-pago/${cita.id}`)}
+                        className="btn-pagar"
+                      >
+                        Pagar
+                      </button>
+                    </>
                   )}
+                </td>
                 </td>
               </tr>
             ))}
