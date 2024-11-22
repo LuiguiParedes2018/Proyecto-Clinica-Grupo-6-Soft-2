@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./HeaderDoctor.css";
+import logohsm from '../../../assets/imagenes/logo.jpg'
 
 function HeaderDoctor() {
   const navigate = useNavigate();
@@ -25,9 +26,11 @@ function HeaderDoctor() {
           <Link to={`/horarios-doctor/${doctorId}`} className="nav-button">Horarios</Link>
           <button onClick={handleLogout} className="nav-button">Cerrar Sesion</button>
         </nav>
+        <img src={logohsm} alt="Logo del hospital" className="hospital-logo" />
       </div>
     </header>
   );
 }
 
 export default HeaderDoctor;
+

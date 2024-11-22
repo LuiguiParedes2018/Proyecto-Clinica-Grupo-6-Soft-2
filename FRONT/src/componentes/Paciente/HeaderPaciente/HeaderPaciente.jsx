@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./HeaderPaciente.css";
+import logohsm from '../../../assets/imagenes/logo.jpg'
 
 function HeaderPaciente() {
   // Obtener el id del paciente desde localStorage
@@ -23,6 +24,7 @@ function HeaderPaciente() {
             Cerrar sesion
           </Link>
         </nav>
+        <img src={logohsm} alt="Logo del hospital" className="hospital-logo" />
       </div>
     </header>
   );
