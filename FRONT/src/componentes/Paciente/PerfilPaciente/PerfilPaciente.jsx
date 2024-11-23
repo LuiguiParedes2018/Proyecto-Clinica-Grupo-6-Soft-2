@@ -62,7 +62,7 @@ function PerfilPaciente() {
       <div className="perfil-paciente-container">
         <div className="perfil-header">
           <img
-            src={pacienteData.imagen || "https://via.placeholder.com/150"}
+            src={pacienteData.imagen || "https://st4.depositphotos.com/20523700/25897/i/450/depositphotos_258975518-stock-photo-illustration-add-user-icon.jpg"}
             alt="Foto del paciente"
             className="perfil-imagen"
           />

@@ -24,6 +24,9 @@ public class Paciente {
     private String telefono;
 
     @Column(nullable = false)
+    private String edad;
+
+    @Column(nullable = false)
     private String password;
 
     @JsonIgnore // Ignorar esta lista para evitar ciclos infinitos
