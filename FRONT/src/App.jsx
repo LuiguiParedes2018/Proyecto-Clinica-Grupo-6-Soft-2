@@ -19,6 +19,9 @@ import CrearHorario from "./componentes/Doctor/CrearHorario/CrearHorario.jsx"
 import HorariosDoctor from "./componentes/Doctor/HorariosDoctor/HorariosDoctor.jsx"
 import CitasCreadas from "./componentes/Doctor/CitasCreadas/CitasCreadas.jsx"
 
+//Funciones del administrador
+import PrincipalAdministrador from "./componentes/Administrador/PrincipalAdministrador/PrincipalAdministrador.jsx"
+
 function App(){
   return(
     <Router>
@@ -38,6 +41,8 @@ function App(){
         <Route path="/citas-creadas/:id" element={<CitasCreadas/>}/>
         <Route path="/historial-citas" element={<HistorialCitas />} />
         <Route path="/metodo-pago/:id" element={<MetodoPago />} />
+
+        <Route path="/principal-administrador" element={<PrincipalAdministrador />} />
       </Routes>
     </Router>
   )

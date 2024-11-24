@@ -1,0 +1,84 @@
+.header {
+    background-color: #000000;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    border: 2px solid #ffffff;
+  }
+  
+  .header-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; /* Limitar el ancho total */
+    margin: 0 auto;
+    justify-content: space-between; 
+  }
+  
+  .logo {
+    font-size: 24px; 
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 20px; /* Espaciado alrededor del texto */
+    border: 2px solid white; /* Borde blanco */
+    border-radius: 50px; /* Bordes redondeados */
+    margin: 0; /* Asegura que no haya desplazamientos por márgenes */
+    display: flex;
+    align-items: center; /* Centra el texto verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    height: 50px; /* Igual al alto de los botones */
+    line-height: 1; /* Asegura que el texto no tenga un espacio extra */
+  }
+  
+  .nav-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 50px;
+  }
+  
+  .nav-button {
+    padding: 10px 20px;
+    background-color: rgb(0, 0, 0);
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    transition: background-color 0.5s ease;
+    text-align: center;
+    width: auto;
+    text-decoration: none;
+  }
+  
+  .nav-button:hover {
+    background-color: rgb(30, 162, 202);
+    color: white;
+  }
+  
+  .nav-button:active {
+    transition: background-color 0.5s ease;
+  }
+  
+  .hospital-logo {
+    height: 70px; /* Ajusta el tamaño */
+    width: auto; /* Mantiene proporciones */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+  }
+  
+  body {
+    padding-top: 100px;
+  }
+  
