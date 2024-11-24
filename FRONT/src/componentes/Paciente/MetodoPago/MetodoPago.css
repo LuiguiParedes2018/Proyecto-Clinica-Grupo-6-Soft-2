@@ -1,129 +1,143 @@
 /* Contenedor principal */
-.metodo-pago {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 30px;
-    max-width: 500px;
-    margin: 50px auto;
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-    text-align: center;
-  }
-  
-  /* Título principal */
-  .metodo-pago h1 {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  /* Opciones de pago */
-  .opcion {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .icono-pago {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 10px;
-  }
-  
-  .btn-opcion {
-    background-color: #e0e0e0;
-    color: #333;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-opcion.activo {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  .btn-opcion:hover {
-    background-color: #d6d6d6;
-  }
-  
-  /* Formulario de tarjeta */
-  .formulario-tarjeta {
-    margin-top: 20px;
-    width: 100%;
-  }
-  
-  .formulario-tarjeta h2 {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .formulario-tarjeta input {
-    display: block;
-    margin: 10px auto;
-    padding: 10px;
-    width: 90%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  /* QR de billetera electrónica */
-  .qr-billetera {
-    margin-top: 20px;
-  }
-  
-  .qr-billetera h2 {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .qr-billetera img {
-    width: 150px;
-    height: 150px;
-  }
-  
-  /* Botones de acción */
-  .botones-acciones {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  
-  .btn-accion {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-accion.confirmar {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  .btn-accion.confirmar:hover {
-    background-color: #45a049;
-  }
-  
-  .btn-accion.volver {
-    background-color: #f44336;
-    color: white;
-  }
-  
-  .btn-accion.volver:hover {
-    background-color: #e53935;
-  }
-  
+.metodo-pago-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+/* Título principal */
+.titulo {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+/* Contenedor de las opciones de pago */
+.opciones-pago {
+  width: 100%;
+}
+
+/* Estilos de las opciones de pago */
+.opcion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.icono-pago {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 15px;
+}
+
+.opcion-btn {
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 220px;
+}
+
+.opcion-btn.activo {
+  background-color: #64b5f6;
+  color: white;
+}
+
+.opcion-btn:hover {
+  background-color: #d4d4d4;
+}
+
+/* Estilos del formulario de tarjeta */
+.formulario-tarjeta {
+  margin-top: 25px;
+  width: 100%;
+}
+
+.formulario-tarjeta h2 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.formulario-tarjeta input {
+  display: block;
+  margin: 12px auto;
+  padding: 12px;
+  width: 85%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+/* Estilos para el código QR de billetera electrónica */
+.qr-billetera {
+  margin-top: 25px;
+}
+
+.qr-billetera h2 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.qr-img {
+  width: 160px;
+  height: 160px;
+  border-radius: 5px;
+}
+
+/* Botones de acción */
+.acciones {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.btn-confirmar {
+  padding: 14px 25px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex-grow: 1;
+}
+
+.btn-confirmar:hover {
+  background-color: #45a049;
+}
+
+.btn-volver {
+  padding: 14px 25px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex-grow: 1;
+}
+
+.btn-volver:hover {
+  background-color: #e53935;
+}
