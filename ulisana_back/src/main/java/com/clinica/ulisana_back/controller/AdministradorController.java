@@ -1,8 +1,6 @@
 package com.clinica.ulisana_back.controller;
 
 import com.clinica.ulisana_back.entity.Administrador;
-import com.clinica.ulisana_back.entity.Doctor;
-import com.clinica.ulisana_back.entity.Paciente;
 import com.clinica.ulisana_back.service.AdministradorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -55,5 +53,16 @@ public class AdministradorController {
         }
         administradorService.deleteAdministradorById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // Endpoint para login
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Administrador administrador) {
+        Optional<Administrador> authenticatedAdministrador = administradorService.authenticateAdministrador(administrador.getCorreo(), administrador.getPassword());
+        if (authenticatedAdministrador.isPresent()) {
+            return ResponseEntity.ok(authenticatedAdministrador.get()); // Devuelve el objeto completo
+        } else {
+            return ResponseEntity.status(401).body("Credenciales incorrectas para el administrador!");
+        }
     }
 }

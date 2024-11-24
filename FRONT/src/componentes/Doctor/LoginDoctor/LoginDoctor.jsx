@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./LoginDoctor.css";
 import { FaUser, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { loginDoctor } from "../../../servicios/doctorService"; // Cambié a loginDoctor para autenticación del doctor
+import { loginDoctor } from "../../../servicios/doctorService"; // Servicio de autenticación del doctor
+import { loginAdministrador } from "../../../servicios/administradorService"; // Servicio de autenticación del administrador
 
 function LoginDoctor() {
   const [correo, setCorreo] = useState("");
@@ -13,26 +14,30 @@ function LoginDoctor() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await loginDoctor(correo, password); 
-      
-      const doctorId = response.data.id; // Obtener el ID del doctor desde la respuesta
-
-      // Guardar el doctorId en localStorage
-      localStorage.setItem("doctorId", doctorId);
-
-      // Redirigir al perfil del doctor con su ID
-      navigate(`/perfil-doctor/${doctorId}`); 
-    } catch (err) {
-      setError("Credenciales incorrectas. Inténtalo de nuevo.");
+      // Intentar loguear como doctor
+      const doctorResponse = await loginDoctor(correo, password);
+      const doctorId = doctorResponse.data.id; // Obtener el ID del doctor desde la respuesta
+      localStorage.setItem("doctorId", doctorId); // Guardar el doctorId en localStorage
+      navigate(`/perfil-doctor/${doctorId}`); // Redirigir al perfil del doctor
+    } catch (doctorError) {
+      try {
+        // Si falla como doctor, intentar loguear como administrador
+        const adminResponse = await loginAdministrador(correo, password);
+        const adminId = adminResponse.data.id; // Obtener el ID del administrador desde la respuesta
+        localStorage.setItem("adminId", adminId); // Guardar el adminId en localStorage
+        navigate(`/buscar-doctor`); // Redirigir a la ruta de administrador
+      } catch (adminError) {
+        setError("Credenciales incorrectas. Inténtalo de nuevo.");
+      }
     }
   };
 
   const redirectToRegister = () => {
-    navigate("/register-doctor"); 
+    navigate("/register-doctor");
   };
 
   const redirectToPatientLogin = () => {
-    navigate("/"); 
+    navigate("/");
   };
 
   return (
@@ -92,3 +97,5 @@ function LoginDoctor() {
 }
 
 export default LoginDoctor;
+
+

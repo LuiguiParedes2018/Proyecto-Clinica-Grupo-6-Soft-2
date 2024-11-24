@@ -24,9 +24,6 @@ public class Paciente {
     private String telefono;
 
     @Column(nullable = false)
-    private String edad;
-
-    @Column(nullable = false)
     private String password;
 
     @JsonIgnore // Ignorar esta lista para evitar ciclos infinitos
@@ -34,27 +31,22 @@ public class Paciente {
     private List<Cita> citas;
 
     public void setId(Long id) {
-
         this.id = id;
     }
 
     public String getPassword() {
-
         return password;
     }
 
     public String getCorreo() {
-
         return correo;
     }
 
     public String getNombreCompleto() {
-
         return nombreCompleto;
     }
 
     public Long getId() {
-
         return id;
     }
 }

@@ -50,6 +50,16 @@ public class AdministradorService {
         return administradorRepository.existsByCorreo(correo);
     }
 
+    // Autenticación de administrador
+    public Optional<Administrador> authenticateAdministrador(String correo, String password) {
+        Optional<Administrador> administrador = administradorRepository.findByCorreo(correo);
+        if (administrador.isPresent() && administrador.get().getPassword().equals(password)) {
+            return administrador;
+        } else {
+            return Optional.empty();
+        }
+    }
+
     // Métodos para gestionar cuentas de pacientes
 
     public List<Paciente> findAllPacientes() {

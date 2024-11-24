@@ -44,6 +44,7 @@ form h1 {
     position: absolute;
     right: 15px;
     transform: translateY(15px);
+    transform: translateY(0px);
     font-size: 20px;
 }
 

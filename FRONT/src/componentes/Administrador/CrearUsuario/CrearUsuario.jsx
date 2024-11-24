@@ -74,7 +74,6 @@ function CrearUsuario() {
         });
         alert("Doctor creado con éxito.");
       }
-      // Reset fields after successful creation
       resetForm();
     } catch (err) {
       console.error("Error al crear el usuario:", err);
@@ -114,7 +113,7 @@ function CrearUsuario() {
         {selectedUserType && (
           <form onSubmit={handleSubmit} className="form-container">
             <div className="input-box">
-              <FaUser className="icono" />
+              <FaUser className="crear-usuario-icono" />
               <input
                 type="text"
                 placeholder="Nombre Completo"
@@ -125,7 +124,7 @@ function CrearUsuario() {
               {fieldErrors.nombreCompleto && <p className="error-message">{fieldErrors.nombreCompleto}</p>}
             </div>
             <div className="input-box">
-              <FaEnvelope className="icono" />
+              <FaEnvelope className="crear-usuario-icono" />
               <input
                 type="email"
                 placeholder="Correo Electrónico"
@@ -136,7 +135,7 @@ function CrearUsuario() {
               {fieldErrors.correo && <p className="error-message">{fieldErrors.correo}</p>}
             </div>
             <div className="input-box">
-              <FaPhone className="icono" />
+              <FaPhone className="crear-usuario-icono" />
               <input
                 type="tel"
                 placeholder="Teléfono"
@@ -148,7 +147,7 @@ function CrearUsuario() {
             </div>
             {selectedUserType === "doctor" && (
               <div className="input-box">
-                <FaBriefcase className="icono" />
+                <FaBriefcase className="crear-usuario-icono" />
                 <select
                   value={especialidadId}
                   onChange={(e) => setEspecialidadId(e.target.value)}
@@ -165,7 +164,7 @@ function CrearUsuario() {
               </div>
             )}
             <div className="input-box">
-              <FaLock className="icono" />
+              <FaLock className="crear-usuario-icono" />
               <input
                 type="password"
                 placeholder="Contraseña"
@@ -176,7 +175,7 @@ function CrearUsuario() {
               {fieldErrors.password && <p className="error-message">{fieldErrors.password}</p>}
             </div>
             <div className="input-box">
-              <FaLock className="icono" />
+              <FaLock className="crear-usuario-icono" />
               <input
                 type="password"
                 placeholder="Confirmar Contraseña"
