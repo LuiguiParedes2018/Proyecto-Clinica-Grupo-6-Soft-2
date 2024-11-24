@@ -16,7 +16,9 @@ function HeaderAdministrador() {
       <div className="header-container">
         <h1 className="logo">Administrador</h1>
         <nav className="nav-buttons">
-          <Link to="/principal-administrador" className="nav-button">Buscador</Link>
+          <Link to="/buscar-doctor" className="nav-button">Buscar Doctor</Link>
+          <Link to="/buscar-paciente" className="nav-button">Buscar Paciente</Link>
+          <Link to="/crear-usuario" className="nav-button">Crear Usuario</Link>
           <button onClick={handleLogout} className="nav-button">Cerrar Sesión</button>
         </nav>
         <img src={logohsm} alt="Logo del hospital" className="hospital-logo" />

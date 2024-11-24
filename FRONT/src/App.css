@@ -42,3 +42,9 @@
   color: #888;
 }
 */
+
+body, html {
+  height: 100%;
+  margin: 0;
+  overflow-y: auto; /* Asegura que el scroll esté habilitado */
+}

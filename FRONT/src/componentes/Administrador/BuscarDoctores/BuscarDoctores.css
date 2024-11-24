@@ -1,0 +1,207 @@
+.principal-administrador {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: transparent;
+  border: 2px solid rgba(0, 0, 0);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+}
+
+/* Contenedor principal para el buscador */
+.buscador-container {
+  position: fixed; /* Fijo para ser estático */
+  top: 20px; /* Espaciado desde la parte superior */
+  left: 50%; /* Centrado horizontalmente */
+  transform: translateX(-50%); /* Ajuste para centrar */
+  background-color: transparent;
+  border: 2px solid rgba(0, 0, 0);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  border-radius: 20px;
+  color: rgb(0, 0, 0);
+  z-index: 999; /* Siempre por encima */
+  margin-top: 110px;
+}
+
+/* Botones para alternar búsqueda */
+.botones-tipo-busqueda {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.botones-tipo-busqueda button {
+  padding: 10px 20px;
+  background-color: rgb(0, 0, 0);
+  border: none;
+  outline: none;
+  border-radius: 16px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.botones-tipo-busqueda button.activo {
+  background-color: rgb(30, 162, 202);
+}
+
+.botones-tipo-busqueda button:hover {
+  background-color: rgb(30, 162, 202);
+}
+
+/* Campo de entrada y botón de búsqueda */
+.campo-busqueda {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.campo-busqueda input {
+  width: 100%;
+  max-width: 400px;
+  height: 50px;
+  background: transparent;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 16px;
+  font-size: 20px;
+  color: black;
+  padding: 15px;
+  outline: none;
+  text-align: center;
+}
+
+.campo-busqueda button {
+  width: auto;
+  padding: 10px 20px;
+  background-color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 16px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.campo-busqueda button:hover {
+  background-color: rgb(30, 162, 202);
+}
+
+/* Contenedor para resultados */
+.resultados-container {
+  position: fixed; /* Fijo para ser estático */
+  top: 120px; /* Espaciado debajo del buscador */
+  left: 50%; /* Centrado horizontalmente */
+  transform: translateX(-50%); /* Ajuste para centrar */
+  background-color: transparent;
+  border: 2px solid rgba(0, 0, 0);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  border-radius: 20px;
+  color: rgb(0, 0, 0);
+  z-index: 998; /* Debajo del buscador */
+  margin-top: 240px;
+  overflow-y: auto;
+  max-height: calc(100vh - 140px); /* Asegura que los resultados no excedan la pantalla */
+  height: 550px; /* Tamaño máximo fijo */
+}
+
+/* Título de resultados */
+.resultados-container h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Lista y estilo de elementos de resultados */
+.lista-resultados {
+  list-style: none;
+  padding: 0;
+}
+
+.resultado-item {
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 18px;
+  color: rgb(0, 0, 0);
+}
+
+.resultado-item:last-child {
+  border-bottom: none;
+}
+
+.resultado-item p {
+  margin: 5px 0;
+}
+
+/* Botones dentro de los resultados */
+.botones-accion {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.editar-button,
+.eliminar-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+}
+
+.editar-button {
+  background-color: rgb(0, 150, 0);
+  color: white;
+}
+
+.editar-button:hover {
+  background-color: rgb(0, 200, 0);
+}
+
+.eliminar-button {
+  background-color: rgb(200, 0, 0);
+  color: white;
+}
+
+.eliminar-button:hover {
+  background-color: rgb(255, 0, 0);
+}
+
+.resultados-container {
+  z-index: 998; /* Debe ser menor al z-index de .modal */
+}
+
+.modal {
+  position: fixed; /* Asegura que la ventana emergente se ubique de forma fija en la pantalla */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centra la ventana emergente */
+  background-color: white;
+  border: 2px solid rgba(0, 0, 0);
+  border-radius: 20px;
+  padding: 20px;
+  z-index: 1000; /* Mayor que el z-index del contenedor de resultados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  max-width: 90%;
+  width: 400px;
+}
+
+.resultados-container {
+  overflow-y: scroll; 
+}

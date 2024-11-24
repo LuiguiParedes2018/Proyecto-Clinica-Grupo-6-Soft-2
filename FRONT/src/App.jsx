@@ -20,7 +20,10 @@ import HorariosDoctor from "./componentes/Doctor/HorariosDoctor/HorariosDoctor.j
 import CitasCreadas from "./componentes/Doctor/CitasCreadas/CitasCreadas.jsx"
 
 //Funciones del administrador
-import PrincipalAdministrador from "./componentes/Administrador/PrincipalAdministrador/PrincipalAdministrador.jsx"
+import BuscarDoctores from "./componentes/Administrador/BuscarDoctores/BuscarDoctores.jsx"
+import BuscarPacientes from "./componentes/Administrador/BuscarPacientes/BuscarPacientes.jsx"
+import CrearUsuario from "./componentes/Administrador/CrearUsuario/CrearUsuario.jsx"
+
 
 function App(){
   return(
@@ -42,7 +45,9 @@ function App(){
         <Route path="/historial-citas" element={<HistorialCitas />} />
         <Route path="/metodo-pago/:id" element={<MetodoPago />} />
 
-        <Route path="/principal-administrador" element={<PrincipalAdministrador />} />
+        <Route path="/buscar-doctor" element={<BuscarDoctores />} />
+        <Route path="/buscar-paciente" element={<BuscarPacientes />} />
+        <Route path="/crear-usuario" element={<CrearUsuario />} />
       </Routes>
     </Router>
   )
