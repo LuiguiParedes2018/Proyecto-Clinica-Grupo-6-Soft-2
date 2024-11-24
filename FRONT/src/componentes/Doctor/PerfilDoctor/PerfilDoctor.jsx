@@ -56,7 +56,7 @@ function PerfilDoctor() {
       <div className="perfil-doctor-container">
         <div className="perfil-header">
           <img
-            src={doctorData.imagen || "https://via.placeholder.com/150"}
+            src={doctorData.imagen || "https://sketchfav.com/rawimg/free-sketch-icons/doctor-illustration-hamamzai.png"}
             alt="Foto del doctor"
             className="perfil-imagen"
           />
@@ -70,7 +70,7 @@ function PerfilDoctor() {
                   onChange={handleChange}
                 />
               ) : (
-                doctorData.nombreCompleto
+                `Dr(a). ${doctorData.nombreCompleto}`
               )}
             </h2>
             <button className="edit-button" onClick={handleEditClick}>
@@ -83,7 +83,7 @@ function PerfilDoctor() {
           <div className="perfil-card">
             <h3>Contacto</h3>
             <p>
-              <strong>Teléfono:</strong>
+              <strong>Teléfono: </strong>
               {isEditing ? (
                 <input
                   type="text"
@@ -96,7 +96,7 @@ function PerfilDoctor() {
               )}
             </p>
             <p>
-              <strong>Email:</strong>
+              <strong>Email: </strong>
               {isEditing ? (
                 <input
                   type="text"
