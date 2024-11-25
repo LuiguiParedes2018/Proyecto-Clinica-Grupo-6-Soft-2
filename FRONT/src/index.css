@@ -6,6 +6,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body{
   font-family: "Oswald", sans-serif;
   display: flex;
@@ -13,7 +14,7 @@ body{
   align-items: center;
   min-height: 100vh;
   background-color: blueviolet;
-  background: url("./assets/imagenes/fondo-clinica.png") no-repeat;
+  background: url("./assets/imagenes/fondo-paciente.png") no-repeat;
   background-size: cover;
   background-position: center;
 }

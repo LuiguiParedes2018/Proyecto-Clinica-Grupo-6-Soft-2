@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "./CrearHorario.css";
+import "./CrearHorario.css"; // El archivo de CSS mantiene su nombre.
 import HeaderDoctor from "../HeaderDoctor/HeaderDoctor.jsx";
 import { createHorarioForDoctor } from "../../../servicios/horarioService"; 
 import { useNavigate } from "react-router-dom";
+import { getDoctorById } from "../../../servicios/doctorService";
 
 function CrearHorario() {
   const [fecha, setFecha] = useState("");
@@ -10,27 +11,38 @@ function CrearHorario() {
   const [consultorio, setConsultorio] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [minFecha, setMinFecha] = useState(""); // Estado para la fecha mínima
-  const [minHora, setMinHora] = useState("");  // Estado para la hora mínima si es hoy
+  const [minFecha, setMinFecha] = useState("");
+  const [minHora, setMinHora] = useState("");
   const navigate = useNavigate();
 
-  // Obtener el ID del doctor desde localStorage
+  const [especialidad, setEspecialidad] = useState("");
+
   const doctorId = localStorage.getItem("doctorId");
 
   useEffect(() => {
-    // Calcular la fecha mínima (día siguiente al día actual)
+    // Calcular la fecha mínima -- día siguiente al día actual
     const today = new Date();
     const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1); // A partir del día siguiente
+    tomorrow.setDate(today.getDate() + 1);
 
-    // Formatear la fecha a "YYYY-MM-DD" para establecerla como valor mínimo
     const minFechaFormateada = tomorrow.toISOString().split("T")[0];
     setMinFecha(minFechaFormateada);
-  }, []);
 
-  // Crear Horario
+    if (doctorId) {
+      getDoctorById(doctorId)
+        .then((response) => {
+          const especialidadNombre = response.data.especialidad?.nombre;
+          setEspecialidad(especialidadNombre || "");
+        })
+        .catch((error) => {
+          console.error("Error al obtener la especialidad del doctor: ", error);
+        });
+    }
+  }, [doctorId]);
+
   const confirmarHorario = async () => {
     if (!doctorId) {
+      console.error("El ID del doctor no está disponible");
       setError("No se pudo obtener el ID del doctor.");
       return;
     }
@@ -40,14 +52,13 @@ function CrearHorario() {
         fecha: fecha,
         hora: hora,
         consultorio: consultorio,
-        doctor: { id: doctorId }, // Usar el doctorId desde localStorage
+        doctor: { id: doctorId },
       };
 
-      // Crear el horario
       const horarioResponse = await createHorarioForDoctor(nuevoHorario);
       if (horarioResponse.data) {
         alert("Horario creado correctamente.");
-        setError(""); // Limpiar errores
+        setError("");
         setSuccessMessage("Horario creado con éxito.");
       }
     } catch (err) {
@@ -56,7 +67,7 @@ function CrearHorario() {
     }
   };
 
-  // Verificar si la fecha seleccionada es el día actual y restringir la hora
+  // Verificar si la fecha seleccionada es el día actual - restriccion
   const handleFechaChange = (e) => {
     const selectedDate = e.target.value;
     setFecha(selectedDate);
@@ -64,13 +75,25 @@ function CrearHorario() {
     const today = new Date();
     const selectedDateObj = new Date(selectedDate);
 
-    // Si la fecha seleccionada es hoy, establecer la hora mínima
+    // Si la fecha seleccionada es hoy, se establecera la hora minima
     if (selectedDateObj.toDateString() === today.toDateString()) {
-      const currentHour = today.toTimeString().split(" ")[0].slice(0, 5); // "HH:MM"
+      const currentHour = today.toTimeString().split(" ")[0].slice(0, 5);
       setMinHora(currentHour);
     } else {
-      setMinHora(""); // No restringir la hora si no es hoy
+      setMinHora("");
     }
+  };
+
+  const getConsultorioOptiones = () => {
+    if (!especialidad) {
+      return <option value="">Cargando consultorios...</option>;
+    }
+    return (
+      <>
+        <option value={`${especialidad} 1`}>{`${especialidad} 1`}</option>
+        <option value={`${especialidad} 2`}>{`${especialidad} 2`}</option>
+      </>
+    );
   };
 
   const isFormValid = fecha && hora && consultorio;
@@ -78,53 +101,48 @@ function CrearHorario() {
   return (
     <div>
       <HeaderDoctor />
-      <div className="crear-horario-container">
-        <div className="input-box">
+      <div className="schedule-form-container">
+        <div className="field-box">
           <label htmlFor="fecha">Fecha</label>
           <input
             type="date"
             id="fecha"
             value={fecha}
             onChange={handleFechaChange}
-            min={minFecha} // Establecer la fecha mínima
+            min={minFecha}
             required
           />
         </div>
-        <div className="input-box">
+        <div className="field-box">
           <label htmlFor="hora">Hora</label>
           <input
             type="time"
             id="hora"
             value={hora}
             onChange={(e) => setHora(e.target.value)}
-            min={minHora} // Establecer la hora mínima si la fecha es hoy
+            min={minHora}
             required
           />
         </div>
-        <div className="input-box">
+        <div className="field-box">
           <label htmlFor="consultorio">Consultorio</label>
           <select
-            className="select-doctor"
+            className="select-room"
             id="consultorio"
             value={consultorio}
             onChange={(e) => setConsultorio(e.target.value)}
             required
           >
             <option value="">Seleccione Consultorio</option>
-            <option value="Consultorio 1">Consultorio 1</option>
-            <option value="Consultorio 2">Consultorio 2</option>
-            <option value="Consultorio 3">Consultorio 3</option>
+            {getConsultorioOptiones()}
           </select>
         </div>
 
-
         {successMessage && <p className="success-message">{successMessage}</p>}
-        {/* Mostrar errores */}
         {error && <p className="error-message">{error}</p>}
 
-        {/* Botón para crear el horario */}
         <button
-          className="confirm-button"
+          className="submit-button"
           onClick={confirmarHorario}
           disabled={!isFormValid}
         >

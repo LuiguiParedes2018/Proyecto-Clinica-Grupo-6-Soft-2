@@ -1,48 +1,48 @@
-.crear-horario-container {
+.schedule-form-container { 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin-top: 50px;
-    padding: 30px; 
-    background-color: white; 
+    padding: 30px;
+    background-color: white;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     height: 100%;
     width: 100%;
 }
 
-.input-box {
-    margin-bottom: 60px; 
+.field-box { 
+    margin-bottom: 60px;
     width: 100%;
 }
 
 label {
     display: block;
-    font-size: 30px; 
-    margin-bottom: 8px; 
+    font-size: 30px;
+    margin-bottom: 8px;
     color: #2b3138;
 }
 
-input, .select-doctor {
+input, .select-room { 
     width: 400px;
-    padding: 5px; 
+    padding: 5px;
     border-radius: 8px;
     border: 1px solid #BDC3C7;
-    background-color: rgba(255, 255, 255, 0.9); /* Más opaco para mejor legibilidad */
+    background-color: rgba(255, 255, 255, 0.9);
     font-size: 30px;
     color: #2C3E50;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Añadido transición */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-input:focus, .select-doctor:focus {
+input:focus, .select-room:focus {
     border-color: #3498DB;
     box-shadow: 0px 0px 5px rgba(52, 152, 219, 0.7);
 }
 
-.confirm-button {
+.submit-button { 
     background-color: #000000;
     color: white;
     padding: 12px 20px;
@@ -51,18 +51,12 @@ input:focus, .select-doctor:focus {
     font-size: 30px;
     margin-top: 30px;
     width: 100%;
-    max-width: 400px;
-    transition: background-color 0.3s ease; 
+    max-width: 399px;
+    transition: background-color 0.3s ease;
 }
 
-.confirm-button:hover {
+.submit-button:hover {
     background-color: #2980B9;
 }
-
-
-
-
-
-
 
   
