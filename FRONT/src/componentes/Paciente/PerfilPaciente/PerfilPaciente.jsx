@@ -80,7 +80,7 @@ function PerfilPaciente() {
               )}
             </h2>
             <p>
-              <strong>Edad:</strong>
+              <strong>Edad: </strong>
               {isEditing ? (
                 <input
                   type="number"
@@ -93,7 +93,7 @@ function PerfilPaciente() {
               )}
             </p>
             <p>
-              <strong>Teléfono:</strong>
+              <strong>Teléfono: </strong>
               {isEditing ? (
                 <input
                   type="text"
@@ -106,7 +106,7 @@ function PerfilPaciente() {
               )}
             </p>
             <p>
-              <strong>Email:</strong>
+              <strong>Email: </strong>
               {isEditing ? (
                 <input
                   type="email"
