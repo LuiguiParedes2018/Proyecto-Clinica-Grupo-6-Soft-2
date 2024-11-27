@@ -33,6 +33,10 @@ public class Paciente {
     @OneToMany(mappedBy = "paciente")
     private List<Cita> citas;
 
+    @JsonIgnore // Evitar ciclos infinitos en la serialización
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
+    private List<Calificacion> calificaciones; // Relación con Calificacion
+
     public void setId(Long id) {
         this.id = id;
     }

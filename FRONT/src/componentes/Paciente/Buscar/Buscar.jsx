@@ -1,43 +1,88 @@
 import React, { useState, useEffect } from "react";
 import "./Buscar.css";
 import HeaderPaciente from "../HeaderPaciente/HeaderPaciente";
-import { getDoctores } from "../../../servicios/doctorService"; // Importar el servicio para obtener doctores
+import { getDoctores } from "../../../servicios/doctorService";
+import { getPromedioCalificacion, enviarCalificacion } from "../../../servicios/calificacionService";
 
 function Buscar() {
-  const [doctores, setDoctores] = useState([]);  
-  const [busqueda, setBusqueda] = useState("");  
-  const [doctoresFiltrados, setDoctoresFiltrados] = useState([]); 
+  const [doctores, setDoctores] = useState([]);
+  const [busqueda, setBusqueda] = useState("");
+  const [doctoresFiltrados, setDoctoresFiltrados] = useState([]);
+  const [calificaciones, setCalificaciones] = useState({});
+  const [calificacionActual, setCalificacionActual] = useState({});
+  
+  // Obtener el ID del paciente desde localStorage
+  const pacienteId = localStorage.getItem("pacienteId");
 
   useEffect(() => {
-    // Utiliza el servicio getDoctores para obtener los doctores desde la API
+    if (!pacienteId) {
+      alert("No se encontró el ID del paciente. Por favor, inicie sesión.");
+      return;
+    }
+
     getDoctores()
       .then((response) => {
-        setDoctores(response.data); // Guardar los doctores obtenidos
-        setDoctoresFiltrados(response.data); // Iniciar con todos los doctores
+        setDoctores(response.data);
+        setDoctoresFiltrados(response.data);
+
+        response.data.forEach((doctor) => {
+          actualizarPromedio(doctor.id);
+        });
       })
       .catch((error) => console.error("Error al cargar los doctores:", error));
-  }, []);
+  }, [pacienteId]);
+
+  const actualizarPromedio = (doctorId) => {
+    getPromedioCalificacion(doctorId)
+      .then((response) => {
+        setCalificaciones((prev) => ({
+          ...prev,
+          [doctorId]: response.data,
+        }));
+      })
+      .catch((error) => console.error("Error al obtener el promedio:", error));
+  };
+
+  const handleCalificacionChange = (doctorId, value) => {
+    setCalificacionActual((prev) => ({
+      ...prev,
+      [doctorId]: value,
+    }));
+  };
+
+  const handleCalificar = (doctorId) => {
+    if (!pacienteId) {
+      alert("No se encontró el ID del paciente. Por favor, inicie sesión.");
+      return;
+    }
+
+    const puntaje = parseInt(calificacionActual[doctorId], 10);
+    if (isNaN(puntaje) || puntaje < 1 || puntaje > 20) {
+      alert("La calificación debe estar entre 1 y 20");
+      return;
+    }
+
+    enviarCalificacion(doctorId, pacienteId, puntaje)
+      .then(() => {
+        actualizarPromedio(doctorId);
+        setCalificacionActual((prev) => ({ ...prev, [doctorId]: "" }));
+      })
+      .catch((error) => console.error("Error al enviar la calificación:", error));
+  };
 
   const handleBusquedaChange = (event) => {
-    setBusqueda(event.target.value); 
+    setBusqueda(event.target.value);
   };
 
   const handleBuscarClick = () => {
     if (busqueda === "") {
-      setDoctoresFiltrados(doctores); // Si la búsqueda está vacía, muestra todos los doctores
+      setDoctoresFiltrados(doctores);
     } else {
-      // Filtrar doctores por nombre o especialidad
       const filtrados = doctores.filter((doctor) =>
-        doctor.nombreCompleto.toLowerCase().includes(busqueda.toLowerCase()) || 
+        doctor.nombreCompleto.toLowerCase().includes(busqueda.toLowerCase()) ||
         doctor.especialidad.nombre.toLowerCase().includes(busqueda.toLowerCase())
       );
-      setDoctoresFiltrados(filtrados); // Actualizar la lista filtrada
-    }
-
-    // Hacer scroll a la lista de doctores si existe
-    const doctorList = document.querySelector(".doctor-list");
-    if (doctorList) {
-      doctorList.scrollIntoView({ behavior: "smooth" });
+      setDoctoresFiltrados(filtrados);
     }
   };
 
@@ -53,31 +98,42 @@ function Buscar() {
             onChange={handleBusquedaChange}
             className="buscar-input"
           />
-          <button onClick={handleBuscarClick} className="buscar-button">Buscar</button>
+          <button onClick={handleBuscarClick} className="buscar-button">
+            Buscar
+          </button>
         </div>
-
         <div className="doctor-list">
           {doctoresFiltrados.length > 0 ? (
             doctoresFiltrados.map((doctor) => (
               <div key={doctor.id} className="doctor-card">
-                <img
-                  src={doctor.imagen} // Asegúrate de tener la URL de la imagen en el backend
-                  alt={`Foto de ${doctor.nombreCompleto}`}
-                  className="doctor-imagen"
+                <h2>{doctor.nombreCompleto}</h2>
+                <p>
+                  <strong>Especialidad:</strong> {doctor.especialidad.nombre}
+                </p>
+                <p>
+                  <strong>Calificación Promedio:</strong>{" "}
+                  {calificaciones[doctor.id] !== undefined
+                    ? calificaciones[doctor.id].toFixed(1)
+                    : "No disponible"}
+                </p>
+                <input
+                  type="number"
+                  min="1"
+                  max="20"
+                  value={calificacionActual[doctor.id] || ""}
+                  onChange={(e) => handleCalificacionChange(doctor.id, e.target.value)}
+                  placeholder="Calificar (1-20)"
                 />
-                <div className="doctor-detalles">
-                  <h2>{doctor.nombreCompleto}</h2>
-                  <p><strong>Especialidad:</strong> {doctor.especialidad.nombre}</p>
-                  <p>{doctor.bio}</p> {/* Si tienes una descripción del doctor */}
-                  <button className="ver-perfil-button">Ver Perfil</button>
-                </div>
+                <button onClick={() => handleCalificar(doctor.id)}>
+                  Confirmar Calificación
+                </button>
               </div>
             ))
           ) : (
             <p>No se encontraron doctores.</p>
           )}
         </div>
-      </div> {/* Cierre del contenedor principal */}
+      </div>
     </div>
   );
 }

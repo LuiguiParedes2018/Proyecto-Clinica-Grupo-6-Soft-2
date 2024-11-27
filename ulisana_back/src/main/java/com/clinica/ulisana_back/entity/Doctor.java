@@ -38,6 +38,18 @@ public class Doctor {
     @JsonIgnore // Ignorar esta lista para evitar ciclos infinitos
     private List<Cita> citas;
 
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    @JsonIgnore // Evitar ciclos infinitos en la serialización
+    private List<Calificacion> calificaciones; // Relación con Calificacion
+
+    // Método para calcular el promedio de calificaciones
+    public double getPromedioCalificacion() {
+        if (calificaciones == null || calificaciones.isEmpty()) {
+            return 0.0;
+        }
+        return calificaciones.stream().mapToInt(Calificacion::getPuntaje).average().orElse(0.0);
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -51,13 +63,10 @@ public class Doctor {
     }
 
     public String getNombreCompleto() {
-
         return nombreCompleto;
     }
 
     public Long getId() {
-
         return id;
     }
 }
-
