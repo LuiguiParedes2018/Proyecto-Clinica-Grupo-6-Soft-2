@@ -23,7 +23,7 @@ public class Paciente {
     @Column(nullable = false)
     private String telefono;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String edad;
 
     @Column(nullable = false)

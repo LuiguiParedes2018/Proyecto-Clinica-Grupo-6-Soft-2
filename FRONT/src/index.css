@@ -97,3 +97,8 @@ body, html {
   overflow-y: auto; /* Asegura que el scroll esté habilitado */
 }
 
+body {
+  background: url('/src/assets/imagenes/clinica_background.png') no-repeat center center fixed;
+  background-size: cover; 
+  margin: 0;
+}
