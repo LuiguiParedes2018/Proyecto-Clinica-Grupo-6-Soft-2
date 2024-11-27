@@ -18,7 +18,15 @@ public class DoctorController {
 
     @GetMapping
     public List<Doctor> getAllDoctores() {
-        return doctorService.findAll();
+        List<Doctor> doctores = doctorService.findAll();
+        doctores.forEach(doctor -> {
+            if (doctor.getEspecialidad() != null) {
+                doctor.getEspecialidad().getNombre(); // Forzamos la inicialización de la especialidad
+            }
+        });
+
+        return doctores;
+
     }
 
     @GetMapping("/{id}")

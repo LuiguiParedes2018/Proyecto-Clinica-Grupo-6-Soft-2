@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./CrearHorario.css";
-import HeaderDoctor from "../HeaderDoctor/HeaderDoctor.jsx";
-import { createHorarioForDoctor } from "../../../servicios/horarioService"; 
-import { useNavigate } from "react-router-dom";
-import { getDoctorById } from "../../../servicios/doctorService"; // Servicio para obtener datos del doctor
+
+import { createHorarioForDoctor } from "../../../servicios/horarioService.js"; 
+import { useParams, useNavigate } from "react-router-dom";
+import { getDoctorById } from "../../../servicios/doctorService.js"; // Servicio para obtener datos del doctor
 
 function CrearHorario() {
   const [fecha, setFecha] = useState("");
@@ -17,9 +17,10 @@ function CrearHorario() {
 
 
   const [especialidad, setEspecialidad] = useState(""); // posible uso para llamar datos de medico
+  const [doctorNombre, setDoctorNombre] = useState(""); // posible uso para llamar datos de medico
 
   // Obtener el ID del doctor desde localStorage
-  const doctorId = localStorage.getItem("doctorId");
+  const {id} = useParams();
 
   useEffect(() => {
     // Calcular la fecha mínima (día siguiente al día actual)
@@ -31,22 +32,23 @@ function CrearHorario() {
     const minFechaFormateada = tomorrow.toISOString().split("T")[0];
     setMinFecha(minFechaFormateada);
 
-    if (doctorId) {
-      getDoctorById(doctorId)
+    if (id) {
+      getDoctorById(id)
         .then((response) => {
-          const especialidadNombre = response.data.especialidad?.nombre; // Accede al nombre de la especialidad
-          setEspecialidad(especialidadNombre || "");
+          const doctor = response.data;
+          setDoctorNombre(doctor.nombreCompleto);
+          setEspecialidad(doctor.especialidad?.nombre || "Sin especialidad");
         })
         .catch((error) => {
-          console.error("Error al obtener la especialidad del doctor: ", error);
+          console.error("Error al obtener los datos del doctor:", error);
         });
     }
-  }, [doctorId]);
+  }, [id]);
 
     
   // Crear Horario
   const confirmarHorario = async () => {
-    if (!doctorId) {
+    if (!id) {
       console.error("El ID del doctor no esta diponible")
       setError("No se pudo obtener el ID del doctor.");
       return;
@@ -54,10 +56,10 @@ function CrearHorario() {
 
        try {
       const nuevoHorario = {
-        fecha: fecha,
-        hora: hora,
-        consultorio: consultorio,
-        doctor: { id: doctorId }, // Usar el doctorId desde localStorage
+        fecha : fecha,
+        hora : hora, 
+        consultorio : consultorio,
+        doctor: { id: id }, // Usar el doctorId desde localStorage
       };
 
       // Crear el horario
@@ -100,6 +102,7 @@ function CrearHorario() {
         setMinHora(""); // No restringir la hora si no es hoy
     }
 };
+
 
 // Funcion que maneja el cambio de hora
 const handleHoraChange = (e) => {
@@ -171,10 +174,20 @@ useEffect(() => {
   // Opciones de minutos (solo 00, 20, 40)
   const minutosDisponibles = ["00", "20", "40"];
 
+  
+
   return (
     <div>
-      <HeaderDoctor />
+      
       <div className="crear-horario-container">
+
+
+
+         {/* Mostrar el nombre del doctor y su especialidad */}
+        <div className="doctor-info">
+        <h2>{`Doctor(a): ${doctorNombre}`}</h2>
+        <h3>{`Especialidad: ${especialidad}`}</h3>
+        </div>
         <div className="input-box">
           <label htmlFor="fecha">Fecha</label>
           <input
@@ -253,6 +266,10 @@ useEffect(() => {
           Crear Horario
         </button>
       </div>
+
+      <button className="back-button" onClick={() => navigate(-1)}>
+        Volver Lista
+      </button>
     </div>
   );
 }
