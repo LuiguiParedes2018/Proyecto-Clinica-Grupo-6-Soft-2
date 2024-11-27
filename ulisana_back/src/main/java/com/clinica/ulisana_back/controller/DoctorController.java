@@ -33,15 +33,28 @@ public class DoctorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Doctor> updateDoctor(@PathVariable Long id, @RequestBody Doctor updatedDoctor) {
+    public ResponseEntity<?> updateDoctor(@PathVariable Long id, @RequestBody Doctor updatedDoctor) {
         Optional<Doctor> doctor = doctorService.findById(id);
+
         if (doctor.isPresent()) {
+            // Validaciones para atributos sensibles (ej. contraseña)
+            if (updatedDoctor.getPassword() != null) {
+                if (updatedDoctor.getPassword().length() <= 5) {
+                    return ResponseEntity.status(400).body("La contraseña debe tener más de 5 caracteres.");
+                }
+                if (!updatedDoctor.getPassword().matches("^[\\S]+$")) {
+                    return ResponseEntity.status(400).body("La contraseña no debe contener espacios.");
+                }
+            }
+
+            // Establecer el ID y guardar los cambios
             updatedDoctor.setId(id);
             return ResponseEntity.ok(doctorService.save(updatedDoctor));
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDoctor(@PathVariable Long id) {

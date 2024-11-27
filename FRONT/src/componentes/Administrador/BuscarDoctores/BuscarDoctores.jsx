@@ -15,6 +15,8 @@ function BuscarDoctores() {
   const [formData, setFormData] = useState({
     nombreCompleto: "",
     telefono: "",
+    correo: "",
+    password: "", // Agregamos el campo para la contraseña
   });
 
   useEffect(() => {
@@ -50,12 +52,14 @@ function BuscarDoctores() {
     setFormData({
       nombreCompleto: doctor.nombreCompleto,
       telefono: doctor.telefono,
+      correo: doctor.correo,
+      password: "", // Limpiamos el campo de la contraseña al abrir el modal
     });
     setShowModalEditar(true);
   };
 
   const handleUpdate = () => {
-    if (!formData.nombreCompleto || !formData.telefono) {
+    if (!formData.nombreCompleto || !formData.telefono || !formData.correo) {
       alert("Por favor, completa todos los campos.");
       return;
     }
@@ -64,6 +68,8 @@ function BuscarDoctores() {
       ...doctorEditar,
       nombreCompleto: formData.nombreCompleto,
       telefono: formData.telefono,
+      correo: formData.correo,
+      password: formData.password || doctorEditar.password, // Si no se cambia la contraseña, se mantiene la actual
     };
 
     updateDoctor(doctorEditar.id, updatedDoctor)
@@ -163,13 +169,35 @@ function BuscarDoctores() {
                   }
                 />
               </label>
+              <label>
+                Correo:
+                <input
+                  type="email"
+                  name="correo"
+                  value={formData.correo}
+                  onChange={(e) =>
+                    setFormData({ ...formData, correo: e.target.value })
+                  }
+                />
+              </label>
+              <label>
+                Contraseña:
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                />
+              </label>
               <div className="modal-buttons">
                 <button
                   type="button"
                   className="confirm-button"
                   onClick={handleUpdate}
                 >
-                  Guardar Cambios
+                  Guardar
                 </button>
                 <button
                   type="button"

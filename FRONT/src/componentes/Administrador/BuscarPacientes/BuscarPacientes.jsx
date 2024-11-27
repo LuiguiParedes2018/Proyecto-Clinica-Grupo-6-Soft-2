@@ -15,6 +15,8 @@ function BuscarPacientes() {
   const [formData, setFormData] = useState({
     nombreCompleto: "",
     telefono: "",
+    correo: "",
+    password: "",
   });
 
   useEffect(() => {
@@ -50,20 +52,25 @@ function BuscarPacientes() {
     setFormData({
       nombreCompleto: paciente.nombreCompleto,
       telefono: paciente.telefono,
+      correo: paciente.correo,  // Cargar correo
+      password: "",  // Dejar campo de password vacío para permitir no cambiarlo
     });
     setShowModalEditar(true);
   };
 
   const handleUpdate = () => {
     if (!formData.nombreCompleto || !formData.telefono) {
-      alert("Por favor, completa todos los campos.");
+      alert("Por favor, completa todos los campos obligatorios.");
       return;
     }
 
+    // Solo actualizar los campos que no estén vacíos
     const updatedPaciente = {
       ...pacienteEditar,
       nombreCompleto: formData.nombreCompleto,
       telefono: formData.telefono,
+      correo: formData.correo || pacienteEditar.correo,  // No cambiar si está vacío
+      password: formData.password || pacienteEditar.password,  // No cambiar si está vacío
     };
 
     updatePaciente(pacienteEditar.id, updatedPaciente)
@@ -76,9 +83,7 @@ function BuscarPacientes() {
         setShowModalEditar(false);
         alert("Paciente actualizado con éxito.");
       })
-      .catch((error) =>
-        console.error("Error al actualizar paciente:", error)
-      );
+      .catch((error) => console.error("Error al actualizar paciente:", error));
   };
 
   const handleCancel = () => {
@@ -163,13 +168,35 @@ function BuscarPacientes() {
                   }
                 />
               </label>
+              <label>
+                Correo:
+                <input
+                  type="email"
+                  name="correo"
+                  value={formData.correo}
+                  onChange={(e) =>
+                    setFormData({ ...formData, correo: e.target.value })
+                  }
+                />
+              </label>
+              <label>
+                Contraseña:
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                />
+              </label>
               <div className="modal-buttons">
                 <button
                   type="button"
                   className="confirm-button"
                   onClick={handleUpdate}
                 >
-                  Guardar Cambios
+                  Guardar
                 </button>
                 <button
                   type="button"
