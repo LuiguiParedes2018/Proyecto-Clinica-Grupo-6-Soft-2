@@ -111,7 +111,7 @@ function Buscar() {
                   <strong>Especialidad:</strong> {doctor.especialidad.nombre}
                 </p>
                 <p>
-                  <strong>Calificación Promedio:</strong>{" "}
+                  <strong>Calificacion:</strong>{" "}
                   {calificaciones[doctor.id] !== undefined
                     ? calificaciones[doctor.id].toFixed(1)
                     : "No disponible"}
@@ -125,7 +125,7 @@ function Buscar() {
                   placeholder="Calificar (1-20)"
                 />
                 <button onClick={() => handleCalificar(doctor.id)}>
-                  Confirmar Calificación
+                  Confirmar Calificacion
                 </button>
               </div>
             ))
@@ -139,3 +139,5 @@ function Buscar() {
 }
 
 export default Buscar;
+
+
