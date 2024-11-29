@@ -17,6 +17,11 @@ export const getDoctores = () => {
   return axios.get(API_URL);
 };
 
+export const getDoctores2 = async () => {
+  const reponse = await axios.get(API_URL);
+  return reponse.data;
+};
+
 // Obtener un doctor por ID
 export const getDoctorById = (id) => {
   return axios.get(`${API_URL}/${id}`);

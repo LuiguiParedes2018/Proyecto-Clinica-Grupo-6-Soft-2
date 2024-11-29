@@ -21,7 +21,6 @@ function HeaderDoctor() {
         <h1 className="logo">Doctor</h1>
         <nav className="nav-buttons">
           <Link to={`/perfil-doctor/${doctorId}`} className="nav-button">Perfil</Link>
-          <Link to="/crear-horario" className="nav-button">Crear Horario</Link>
           <Link to={`/citas-creadas/${doctorId}`} className="nav-button">Citas creadas</Link>
           <Link to={`/horarios-doctor/${doctorId}`} className="nav-button">Horarios</Link>
           <button onClick={handleLogout} className="nav-button">Cerrar Sesion</button>

@@ -15,7 +15,6 @@ import MetodoPago from "./componentes/Paciente/MetodoPago/MetodoPago.jsx"
 import LoginDoctor from "./componentes/Doctor/LoginDoctor/LoginDoctor.jsx"
 import RegisterDoctor from "./componentes/Doctor/RegisterDoctor/RegisterDoctor.jsx"
 import PerfilDoctor from "./componentes/Doctor/PerfilDoctor/PerfilDoctor.jsx"
-import CrearHorario from "./componentes/Doctor/CrearHorario/CrearHorario.jsx"
 import HorariosDoctor from "./componentes/Doctor/HorariosDoctor/HorariosDoctor.jsx"
 import CitasCreadas from "./componentes/Doctor/CitasCreadas/CitasCreadas.jsx"
 
@@ -23,7 +22,8 @@ import CitasCreadas from "./componentes/Doctor/CitasCreadas/CitasCreadas.jsx"
 import BuscarDoctores from "./componentes/Administrador/BuscarDoctores/BuscarDoctores.jsx"
 import BuscarPacientes from "./componentes/Administrador/BuscarPacientes/BuscarPacientes.jsx"
 import CrearUsuario from "./componentes/Administrador/CrearUsuario/CrearUsuario.jsx"
-
+import ListaDoctores from "./componentes/Administrador/ListaDoctores/ListaDoctores.jsx"
+import CrearHorario from './componentes/Administrador/CrearHorario/CrearHorario.jsx';
 
 function App(){
   return(
@@ -39,7 +39,10 @@ function App(){
         <Route path="/login-doctor" element={<LoginDoctor/>}/>
         <Route path="/register-doctor" element={<RegisterDoctor/>}/>
         <Route path="/perfil-doctor/:id" element={<PerfilDoctor/>}/>
-        <Route path="/crear-horario" element={<CrearHorario/>}/>
+        
+        <Route path="/crearHorario/:id" element={<CrearHorario />} />
+        <Route path="/lista-doctores" element={<ListaDoctores/>}/>
+
         <Route path="/horarios-doctor/:id" element={<HorariosDoctor />} />
         <Route path="/citas-creadas/:id" element={<CitasCreadas/>}/>
         <Route path="/historial-citas" element={<HistorialCitas />} />
