@@ -10,7 +10,7 @@ function Buscar() {
   const [doctoresFiltrados, setDoctoresFiltrados] = useState([]);
   const [calificaciones, setCalificaciones] = useState({});
   const [calificacionActual, setCalificacionActual] = useState({});
-  
+
   // Obtener el ID del paciente desde localStorage
   const pacienteId = localStorage.getItem("pacienteId");
 
@@ -87,7 +87,7 @@ function Buscar() {
   };
 
   return (
-    <div>
+    <div className="main-container">
       <HeaderPaciente />
       <div className="buscar-wrapper">
         <div className="buscar-container">
@@ -107,15 +107,8 @@ function Buscar() {
             doctoresFiltrados.map((doctor) => (
               <div key={doctor.id} className="doctor-card">
                 <h2>{doctor.nombreCompleto}</h2>
-                <p>
-                  <strong>Especialidad:</strong> {doctor.especialidad.nombre}
-                </p>
-                <p>
-                  <strong>Calificacion:</strong>{" "}
-                  {calificaciones[doctor.id] !== undefined
-                    ? calificaciones[doctor.id].toFixed(1)
-                    : "No disponible"}
-                </p>
+                <p><strong>Especialidad:</strong> {doctor.especialidad.nombre}</p>
+                <p><strong>Calificación:</strong> {calificaciones[doctor.id]?.toFixed(1) || "No disponible"}</p>
                 <input
                   type="number"
                   min="1"
@@ -125,7 +118,7 @@ function Buscar() {
                   placeholder="Calificar (1-20)"
                 />
                 <button onClick={() => handleCalificar(doctor.id)}>
-                  Confirmar Calificacion
+                  Confirmar Calificación
                 </button>
               </div>
             ))
@@ -139,5 +132,6 @@ function Buscar() {
 }
 
 export default Buscar;
+
 
 
