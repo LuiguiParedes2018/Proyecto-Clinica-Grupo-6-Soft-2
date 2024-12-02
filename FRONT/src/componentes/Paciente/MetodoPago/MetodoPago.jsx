@@ -72,9 +72,16 @@ function MetodoPago() {
 
       {/* Botones de acción */}
       <div className="acciones">
-        <button className="btn-confirmar" onClick={handlePago}>
-          Confirmar Pago
-        </button>
+      <button
+        className="btn-confirmar"
+        onClick={() => {
+          handlePago(); // Llama a la función de pago
+          navigate("/tu-cita"); // Navega a la ruta "/tu-cita"
+        }}
+      >
+        Confirmar Pago
+      </button>
+
         <button
           className="btn-volver"
           onClick={() => navigate("/tu-cita")}
